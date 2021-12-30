@@ -17,7 +17,7 @@ body {
     width: 900px;
     height: 600px;
     background-repeat: no-repeat;
-    background-image: url(./img/bg1.png);
+    background-image: url(../img/bg1.png);
     border: 2px solid #fff;
     display: flex;
 }
@@ -26,6 +26,11 @@ table {
     border-spacing: 0;
 }
 
-.board {
+.pikachu:hover {
+    opacity: 0.5;
+    cursor: url("../img/pointer.png"), url("../img/pointer.png"), default;
+}
+
+#board {
     margin: auto;
 }
