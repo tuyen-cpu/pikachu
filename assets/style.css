@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    vertical-align: middle;
+}
+
+body {
+    background-color: #000;
+    display: flex;
+}
+
+.app {
+    margin: auto;
+    width: 900px;
+    height: 600px;
+    background-repeat: no-repeat;
+    background-image: url(./img/bg1.png);
+    border: 2px solid #fff;
+    display: flex;
+}
+
+table {
+    border-spacing: 0;
+}
+
+.board {
+    margin: auto;
+}
