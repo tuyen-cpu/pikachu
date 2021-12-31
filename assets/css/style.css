@@ -27,7 +27,7 @@ table {
 }
 
 .pikachu:hover {
-    opacity: 0.5;
+    opacity: 0.7;
     cursor: url("../img/pointer.png"), url("../img/pointer.png"), default;
 }
 

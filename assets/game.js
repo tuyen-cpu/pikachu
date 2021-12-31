@@ -1,27 +1,16 @@
-const COL = 12;
-const ROW = 8;
+var COL = 12;
+var ROW = 8;
 class Game {
     constructor() {
             this.typeOfPikachu = 7; // type number of pikachu init is 7
             this.rowMax = ROW + 2; //the actual number of rows of the matrix including the border
             this.colMax = COL + 2; //the actual number of columns of the matrix including the border
-            this.arr = [
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            ]
-            this.initBoard();
-            this.randomArray();
+            this.mainArray = this.borderEmptyArray(this.shuffledArr(this.randomTwinArray()));
+            this.createBoardPikachu(this.mainArray);
+
         }
-        /* Create elements cell + load image based on matrix frame */
-    initBoard() {
+        /* Create elements cell + load image based on matrix */
+    createBoardPikachu(array) {
         const table = document.createElement("table");
         const board = document.getElementById("board");
         board.appendChild(table);
@@ -29,36 +18,60 @@ class Game {
             const tr = document.createElement("tr");
             table.appendChild(tr);
             for (var j = 0; j < this.colMax; j++) {
-                const p = new Pikachu(this, i, j, this.arr[i][j]);
+                const p = new Pikachu(this, i, j, array[i][j]);
                 tr.appendChild(p.getElement);
             }
         }
 
     }
-    randomArray() {
-        var array = [ROW * COL / 2];
-        //twin
-        let count = 1,
-            index = 0;
-        for (let i = 0; i < COL * ROW / 2; i++) {
-            if (count > this.typeOfPikachu) count = 1;
-            array[index] = count;
-            array[index + 1] = count;
-            index = index + 2;
-            count++;
+    clearBoardPikachu() {
+            document.getElementById("board").innerHTML = '';
         }
-        var arrayLength = array.length
-        var tempArray1 = new Array();
-        for (var i = 0; i < arrayLength; i++) {
-            tempArray1[i] = i;
+        // Generate pairs of numbers that are the same
+    randomTwinArray() {
+            let array = [ROW * COL];
+            let count = 1,
+                index = 0;
+            for (let i = 0; i < 50; i++) {
+                if (count > this.typeOfPikachu) count = 1;
+                array[index] = count;
+                array[index + 1] = count;
+                index = index + 2;
+                count++;
+            }
+            console.log(array)
+            return array;
         }
-        var tempArray2 = new Array();
-        for (var i = 0; i < arrayLength; i++) {
-            tempArray2[i] = tempArray1.splice(Math.floor(Math.random() * tempArray1.length), 1)
+        // Mix index of element in array
+    shuffledArr(arr) {
+        const newArr = arr.slice()
+        for (let i = newArr.length - 1; i > 0; i--) {
+            const random = Math.floor(Math.random() * (i + 1));
+            [newArr[i], newArr[random]] = [newArr[random], newArr[i]];
         }
-        console.log(tempArray2)
-            // return arr;
-    }
+        console.log(newArr)
+        return newArr
+    };
+    // Create border array with number 0
+    borderEmptyArray(arr) {
+        const newArr = new Array();
+        let tempArr = [];
+        let index = 0;
+        for (let i = 0; i < this.rowMax; i++) {
+            for (let j = 0; j < this.colMax; j++) {
+                if (i != 0 && i != this.rowMax - 1 && j != 0 && j != this.colMax - 1) {
+                    tempArr[j] = arr[index];
+                    index++;
+                } else {
+                    tempArr[j] = 0
+                }
+            }
+            newArr.push(tempArr);
+            tempArr = [];
+        }
+        console.log(newArr)
+        return newArr;
 
+    }
 }
 const g = new Game();
