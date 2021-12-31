@@ -6,6 +6,7 @@ class Pikachu {
         this.value = value;
         this.init();
         this.isSelected = false;
+
     }
     init() {
         this.cell = document.createElement("td");
@@ -13,7 +14,7 @@ class Pikachu {
         if (this.value != 0) {
             let img = document.createElement("img");
             img.src = "./assets/img/a" + this.value + ".png";
-            img.setAttribute("onclick", `check(this, ${this.x}, ${this.y})`)
+            this.cell.setAttribute("onclick", `check(this, ${this.x}, ${this.y})`)
             this.cell.appendChild(img);
         }
 
@@ -22,6 +23,21 @@ class Pikachu {
         this.isSelected = para;
     }
     get getElement() {
-        return this.cell;
-    }
+            return this.cell;
+        }
+        // selectCell() {
+        //     this.cell.addEventListener("click", function(e) {
+        //         console.log(e)
+        //         this.isSelected = !this.isSelected;
+        //         if (this.isSelected) {
+        //             this.style.opacity = "0.9";
+        //             this.style.boxShadow = "0px 0px 1px 1px red"
+        //         } else {
+        //             this.style.opacity = "1";
+        //             this.style.boxShadow = "none"
+        //         }
+        //     });
+
+    // }
+
 }
