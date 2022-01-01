@@ -6,7 +6,8 @@ class Game {
                 [null, null],
                 [null, null]
             ];
-            this.typeOfPikachu = 3; // type number of pikachu init is 7
+            this.pathArray = []; // Array contain path when connect 2 cell
+            this.typeOfPikachu = 3; // type number of pika chu init is 7
             this.rowMax = ROW + 2; //the actual number of rows of the matrix including the border
             this.colMax = COL + 2; //the actual number of columns of the matrix including the border
             this.mainArray = this.borderEmptyArray(this.shuffledArr(this.randomTwinArray()));
@@ -30,7 +31,7 @@ class Game {
     clearBoardPikachu() {
             document.getElementById("board").innerHTML = '';
         }
-        // Generate pairs of numbers that are the same
+        // Generate pairs of numbers
     randomTwinArray() {
             let array = [ROW * COL / 2];
             let count = 1,
@@ -93,22 +94,23 @@ class Game {
         }
         //Check if adjacent cells are empty
     checkHorizontal(x, y, yt) {
-        for (let i = y; i != yt;
-            (y < yt ? i++ : i--)) {
-            // console.log("[" + x + ", " + i + "]: " + this.mainArray[x][i])
-            if (this.mainArray[x][i]) {
-                // this.arrVertical = [];
-                // console.log("H: false")
-                return false;
-            } else {
-                // var index = this.getIndex(x, i);
-                // this.arrVertical.push(index);
-                // console.log("H: true")
+            for (let i = y; i != yt;
+                (y < yt ? i++ : i--)) {
+                // console.log("[" + x + ", " + i + "]: " + this.mainArray[x][i])
+                if (this.mainArray[x][i]) {
+                    // this.arrVertical = [];
+                    // console.log("H: false")
+                    return false;
+                } else {
+                    // var index = this.getIndex(x, i);
+                    // this.arrVertical.push(index);
+                    // console.log("H: true")
+                }
             }
+            return true;
         }
-        return true;
-    }
-    connectPikachu(cellA, cellB) {
+        //Check cellA and cellB is connect ??=> true ? false
+    isConnect(cellA, cellB) {
 
         if (cellA[0] > cellB[0]) {
             let C = cellA;
@@ -192,44 +194,53 @@ class Game {
         // this.arrVertical = [];
     }
     check(cell, x, y) {
-
-            if (!this.selectedArray[0][0]) {
+            /*
+            selectedArray[a][b]: a=[0,1], b[0,1]
+            */
+            let a0 = this.selectedArray[0][0];
+            let a1 = this.selectedArray[0][1];
+            if (!a0) {
+                // when you haven't select any cell
                 this.selectedArray[0] = [x, y];
                 this.borderCell(cell)
             } else {
+                //when you select cell 2
                 this.selectedArray[1] = [x, y];
-                this.clearBorderCell((this.selectedArray[0][0] * this.colMax + this.selectedArray[0][1]));
-                this.clearBorderCell((this.selectedArray[1][0] * this.colMax + this.selectedArray[1][1]));
-                if (JSON.stringify(this.selectedArray[0]) == JSON.stringify(this.selectedArray[1])) {
-                    console.log("Same")
-                    this.selectedArray = [
-                        [null, null],
-                        [null, null]
-                    ]
+                let b0 = this.selectedArray[1][0];
+                let b1 = this.selectedArray[1][1];
+                this.clearBorderCell(this.getIndexOfCell(a0, a1));
+                this.clearBorderCell(this.getIndexOfCell(b0, b1));
+                if (JSON.stringify(this.selectedArray[0]) === JSON.stringify(this.selectedArray[1])) {
+                    // 2 selected cells is same
+                    this.resetSelectedArray();
                     return;
                 } else {
-                    this.clearBorderCell((this.selectedArray[0][0] * this.colMax + this.selectedArray[0][1]));
-                    this.clearBorderCell((this.selectedArray[1][0] * this.colMax + this.selectedArray[1][1]));
-                    if (this.mainArray[this.selectedArray[0][0]][this.selectedArray[0][1]] == this.mainArray[this.selectedArray[1][0]][this.selectedArray[1][1]]) {
-                        if (this.connectPikachu(this.selectedArray[0], this.selectedArray[1])) {
-                            console.log("Same1: " + this.mainArray[this.selectedArray[0][0]][this.selectedArray[0][1]]);
-                            console.log("Same2: " + this.mainArray[this.selectedArray[1][0]][this.selectedArray[1][1]]);
-                            this.mainArray[this.selectedArray[0][0]][this.selectedArray[0][1]] = 0;
-                            this.mainArray[this.selectedArray[1][0]][this.selectedArray[1][1]] = 0;
-                            this.removeCell((this.selectedArray[0][0] * this.colMax + this.selectedArray[0][1]));
-                            this.removeCell((this.selectedArray[1][0] * this.colMax + this.selectedArray[1][1]));
+                    // 2 selected cells have different
+                    this.clearBorderCell(this.getIndexOfCell(a0, a1));
+                    this.clearBorderCell(this.getIndexOfCell(b0, b1));
+                    if (this.mainArray[a0][a1] == this.mainArray[b0][b1]) {
+                        // 2 selected cells have the same value
+                        if (this.isConnect(this.selectedArray[0], this.selectedArray[1])) {
+                            this.mainArray[a0][a1] = 0;
+                            this.mainArray[b0][b1] = 0;
+                            this.removeCell(this.getIndexOfCell(a0, a1));
+                            this.removeCell(this.getIndexOfCell(b0, b1));
                             console.log(this.mainArray)
                         }
                     }
-                    this.selectedArray = [
-                        [null, null],
-                        [null, null]
-                    ]
+                    this.resetSelectedArray();
 
 
                 }
             }
 
+        }
+        // set selected array = null
+    resetSelectedArray() {
+            this.selectedArray = [
+                [null, null],
+                [null, null]
+            ]
         }
         //Border cell 
     borderCell(cell) {
@@ -240,19 +251,23 @@ class Game {
         }
         // remove border cell 
     clearBorderCell(index) {
-        const pikachu = document.querySelectorAll(".pikachu");
-        for (var i = 0; i < this.rowMax; i++) {
-            for (var j = 0; j < this.colMax; j++) {
-                pikachu[index].isSelected = false;
-                pikachu[index].style.opacity = "1";
-                pikachu[index].style.boxShadow = "none";
+            const pikachu = document.querySelectorAll(".pikachu");
+            for (var i = 0; i < this.rowMax; i++) {
+                for (var j = 0; j < this.colMax; j++) {
+                    pikachu[index].isSelected = false;
+                    pikachu[index].style.opacity = "1";
+                    pikachu[index].style.boxShadow = "none";
+                }
             }
         }
-    }
+        //hidden cell
     removeCell(index) {
         const pikachu = document.querySelectorAll(".pikachu");
         pikachu[index].style.visibility = "hidden"
         pikachu[index].innerHTML = "";
+    }
+    getIndexOfCell(x, y) {
+        return x * this.colMax + y;
     }
 }
 const g = new Game();
