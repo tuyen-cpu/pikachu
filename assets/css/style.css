@@ -41,8 +41,13 @@ table {
 }
 
 .pikachu:hover {
-    opacity: 0.7;
+    opacity: 0.5;
     cursor: url("../img/pointer.png"), url("../img/pointer.png"), default;
+}
+
+.hover {
+    opacity: 0.5;
+    box-shadow: 0px 0px 5px 2px red;
 }
 
 td {

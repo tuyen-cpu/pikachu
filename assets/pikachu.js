@@ -24,21 +24,8 @@ class Pikachu {
         this.isSelected = para;
     }
     get getElement() {
-            return this.cell;
-        }
-        // selectCell() {
-        //     this.cell.addEventListener("click", function(e) {
-        //         console.log(e)
-        //         this.isSelected = !this.isSelected;
-        //         if (this.isSelected) {
-        //             this.style.opacity = "0.9";
-        //             this.style.boxShadow = "0px 0px 1px 1px red"
-        //         } else {
-        //             this.style.opacity = "1";
-        //             this.style.boxShadow = "none"
-        //         }
-        //     });
+        return this.cell;
+    }
 
-    // }
 
 }

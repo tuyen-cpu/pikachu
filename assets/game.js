@@ -88,10 +88,7 @@ class Game {
                 if (this.mainArray[i][y]) {
                     this.pathArray = [];
                     return false;
-                } else {
-                    console.log("V add " + this.getIndexOfCell(i, y))
-                    this.pathArray.push(this.getIndexOfCell(i, y))
-                }
+                } else { this.pathArray.push(this.getIndexOfCell(i, y)) }
             }
             return true;
         }
@@ -104,7 +101,6 @@ class Game {
                     this.pathArray = [];
                     return false;
                 } else {
-                    console.log("H add " + this.getIndexOfCell(x, i))
                     this.pathArray.push(this.getIndexOfCell(x, i))
                 }
             }
@@ -185,7 +181,12 @@ class Game {
             if (!a0) {
                 // when you haven't select any cell
                 this.selectedArray[0] = [x, y];
-                this.borderCell(cell)
+                a0 = this.selectedArray[0][0];
+                a1 = this.selectedArray[0][1];
+                console.log(this.mainArray[a0][a1])
+                if (this.mainArray[a0][a1]) {
+                    this.borderCell(cell)
+                }
             } else {
                 //when you select cell 2
                 this.selectedArray[1] = [x, y];
@@ -193,47 +194,45 @@ class Game {
                 let b1 = this.selectedArray[1][1];
                 this.clearBorderCell(this.getIndexOfCell(a0, a1));
                 this.clearBorderCell(this.getIndexOfCell(b0, b1));
-                if (JSON.stringify(this.selectedArray[0]) === JSON.stringify(this.selectedArray[1])) {
-                    // 2 selected cells is same
-                    this.resetSelectedArray();
-                    return;
-                } else {
-                    // 2 selected cells have different
-                    this.clearBorderCell(this.getIndexOfCell(a0, a1));
-                    this.clearBorderCell(this.getIndexOfCell(b0, b1));
-                    if (this.mainArray[a0][a1] == this.mainArray[b0][b1]) {
-                        // 2 selected cells have the same value
-                        if (this.isConnect(this.selectedArray[0], this.selectedArray[1])) {
+                if (this.mainArray[b0][b1]) {
+                    // cell != number 0
+                    if (JSON.stringify(this.selectedArray[0]) === JSON.stringify(this.selectedArray[1])) {
+                        // 2 selected cells is same
+                        this.resetSelectedArray();
+                        return;
+                    } else {
+                        // 2 selected cells have different
+                        this.clearBorderCell(this.getIndexOfCell(a0, a1));
+                        this.clearBorderCell(this.getIndexOfCell(b0, b1));
+                        if (this.mainArray[a0][a1] == this.mainArray[b0][b1]) {
+                            // 2 selected cells have the same value
+                            if (this.isConnect(this.selectedArray[0], this.selectedArray[1])) {
+                                this.pathArray.unshift(this.getIndexOfCell(a0, a1)); // first index of path 
+                                this.pathArray.push(this.getIndexOfCell(b0, b1)); //last index of path 
 
-                            this.pathArray.unshift(this.getIndexOfCell(a0, a1)); // first index of path 
-                            this.pathArray.push(this.getIndexOfCell(b0, b1)); //last index of path 
+                                this.mainArray[a0][a1] = 0;
+                                this.mainArray[b0][b1] = 0;
 
-                            this.mainArray[a0][a1] = 0;
-                            this.mainArray[b0][b1] = 0;
+                                this.removeCell(this.getIndexOfCell(a0, a1));
+                                this.removeCell(this.getIndexOfCell(b0, b1));
 
-                            this.removeCell(this.getIndexOfCell(a0, a1));
-                            this.removeCell(this.getIndexOfCell(b0, b1));
+                                const pikachu = document.querySelectorAll(".pikachu");
+                                this.pathArray.forEach((element) => {
+                                    pikachu[element].classList.add("path");
+                                    const time = setTimeout(() => { pikachu[element].classList.remove("path") }, 500);
 
-                            const pikachu = document.querySelectorAll(".pikachu");
-                            this.pathArray.forEach((element) => {
-                                pikachu[element].classList.add("path");
-                                const time = setTimeout(() => { pikachu[element].classList.remove("path") }, 500);
-
-                            });
-
-                            console.log(this.pathArray)
+                                });
+                            } else {
+                                this.pathArray = [];
+                            }
                         } else {
                             this.pathArray = [];
                         }
-                    } else {
-                        this.pathArray = [];
+                        this.resetSelectedArray();
                     }
-                    this.resetSelectedArray();
+                    this.pathArray = [];
                 }
-                this.pathArray = [];
             }
-            console.log(this.pathArray)
-
         }
         // set selected array = null
     resetSelectedArray() {
@@ -244,10 +243,8 @@ class Game {
         }
         //Border cell 
     borderCell(cell) {
-
             cell.isSelected = true;
-            cell.style.opacity = "0.9";
-            cell.style.boxShadow = "0px 0px 1px 1px red"
+            cell.classList.add("hover")
         }
         // remove border cell 
     clearBorderCell(index) {
@@ -255,8 +252,8 @@ class Game {
             for (var i = 0; i < this.rowMax; i++) {
                 for (var j = 0; j < this.colMax; j++) {
                     pikachu[index].isSelected = false;
-                    pikachu[index].style.opacity = "1";
-                    pikachu[index].style.boxShadow = "none";
+                    pikachu[index].classList.remove("hover")
+
                 }
             }
         }
