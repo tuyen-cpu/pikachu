@@ -8,8 +8,8 @@ class Game {
             ];
             this.pathArray = []; // Array contain path when connect 2 cell
             this.typeOfPikachu = 3; // type number of pika chu init is 7
-            this.rowMax = ROW + 2; //the actual number of rows of the matrix including the border
-            this.colMax = COL + 2; //the actual number of columns of the matrix including the border
+            this.rowMax = ROW + 2; //the actual number of rows of the matrix including the border (border value is 0)
+            this.colMax = COL + 2; //the actual number of columns of the matrix including the border (border value is 0)
             this.mainArray = this.borderEmptyArray(this.shuffledArr(this.randomTwinArray()));
             this.createBoardPikachu(this.mainArray);
         }
@@ -81,13 +81,10 @@ class Game {
                 (x < xt ? i++ : i--)) {
                 // console.log("[" + i + ", " + y + "]: " + this.mainArray[i][y])
                 if (this.mainArray[i][y]) {
-                    // this.arrVertical = [];
-                    // console.log("V: false")
+                    // this.pathArray = [];
                     return false;
                 } else {
-                    // var index = this.getIndex(i, y);
-                    // this.arrVertical.push(index);
-                    // console.log("V: true")
+                    this.pathArray.push(this.getIndexOfCell(i, y))
                 }
             }
             return true;
@@ -98,13 +95,10 @@ class Game {
                 (y < yt ? i++ : i--)) {
                 // console.log("[" + x + ", " + i + "]: " + this.mainArray[x][i])
                 if (this.mainArray[x][i]) {
-                    // this.arrVertical = [];
-                    // console.log("H: false")
+                    // this.pathArray = [];
                     return false;
                 } else {
-                    // var index = this.getIndex(x, i);
-                    // this.arrVertical.push(index);
-                    // console.log("H: true")
+                    this.pathArray.push(this.getIndexOfCell(x, i))
                 }
             }
             return true;
@@ -120,40 +114,38 @@ class Game {
         //th1
 
         if (this.checkVertical(cellA[0] + 1, cellA[1], cellB[0]) && this.checkHorizontal(cellB[0], cellA[1], cellB[1])) {
-            // this.arrMarked = this.arrMarked.concat(this.arrVertical)
+
+
             console.log("TH1")
             return true;
         }
-        // this.arrMarked = [];
-        // this.arrVertical = [];
         //th2
 
         for (let j = (cellA[1] - 1); j >= 0; j--) {
             if (this.mainArray[cellA[0]][j]) break;
-            // this.arrMarked.push(this.getIndex(cellA[0], j))
+
 
             if (this.checkVertical((cellA[0]), j, cellB[0]) && this.checkHorizontal(cellB[0], j, cellB[1])) {
-                // this.arrMarked = this.arrMarked.concat(this.arrVertical)
+
+
                 console.log("TH2")
                 return true;
             }
         }
-        // this.arrMarked = [];
-        // this.arrVertical = [];
-        //th3
 
+        //th3
         for (let j = (cellA[1] + 1); j < this.colMax; j++) {
             if (this.mainArray[cellA[0]][j]) break;
-            // this.arrMarked.push(this.getIndex(cellA[0], j))
+
             if (this.checkVertical((cellA[0]), j, cellB[0]) && this.checkHorizontal(cellB[0], j, cellB[1])) {
 
-                // this.arrMarked = this.arrMarked.concat(this.arrVertical)
+
+
                 console.log("TH3")
                 return true;
             }
         }
-        // this.arrMarked = [];
-        // this.arrVertical = [];
+
         if (cellA[1] > cellB[1]) {
             let C = cellA;
             cellA = cellB;
@@ -163,17 +155,19 @@ class Game {
         //th4
 
         if (this.checkHorizontal(cellA[0], cellA[1] + 1, cellB[1]) && this.checkVertical(cellA[0], cellB[1], cellB[0])) {
+
+
             console.log("TH4")
             return true;
         }
         //th5
-        // this.arrMarked = [];
-        // this.arrVertical = [];
+
         for (let j = (cellA[0] - 1); j >= 0; j--) {
             if (this.mainArray[j][cellA[1]]) break;
-            // this.arrMarked.push(this.getIndex(j, cellA[1]));
+
             if (this.checkHorizontal(j, (cellA[1]), cellB[1]) && this.checkVertical(j, cellB[1], cellB[0])) {
-                // this.arrMarked = this.arrMarked.concat(this.arrVertical)
+
+
                 console.log("TH5")
                 return true;
             }
@@ -183,15 +177,17 @@ class Game {
         //th6
         for (let j = (cellA[0] + 1); j < this.rowMax; j++) {
             if (this.mainArray[j][cellA[1]]) break;
-            // this.arrMarked.push(this.getIndex(j, cellA[1]));
+
             if (this.checkHorizontal(j, (cellA[1]), cellB[1]) && this.checkVertical(j, cellB[1], cellB[0])) {
-                // this.arrMarked = this.arrMarked.concat(this.arrVertical)
+
+
                 console.log("TH6")
                 return true;
             }
         }
         // this.arrMarked = [];
         // this.arrVertical = [];
+
     }
     check(cell, x, y) {
             /*
@@ -221,16 +217,19 @@ class Game {
                     if (this.mainArray[a0][a1] == this.mainArray[b0][b1]) {
                         // 2 selected cells have the same value
                         if (this.isConnect(this.selectedArray[0], this.selectedArray[1])) {
+
+                            this.pathArray.unshift(this.getIndexOfCell(a0, a1)); // first index of path 
+                            this.pathArray.push(this.getIndexOfCell(b0, b1)); //last index of path 
+
                             this.mainArray[a0][a1] = 0;
                             this.mainArray[b0][b1] = 0;
+
                             this.removeCell(this.getIndexOfCell(a0, a1));
                             this.removeCell(this.getIndexOfCell(b0, b1));
-                            console.log(this.mainArray)
+                            console.log(this.pathArray)
                         }
                     }
                     this.resetSelectedArray();
-
-
                 }
             }
 
@@ -262,10 +261,11 @@ class Game {
         }
         //hidden cell
     removeCell(index) {
-        const pikachu = document.querySelectorAll(".pikachu");
-        pikachu[index].style.visibility = "hidden"
-        pikachu[index].innerHTML = "";
-    }
+            const pikachu = document.querySelectorAll(".pikachu");
+            pikachu[index].style.visibility = "hidden"
+            pikachu[index].innerHTML = "";
+        }
+        //get index of cell base x y from main array
     getIndexOfCell(x, y) {
         return x * this.colMax + y;
     }
