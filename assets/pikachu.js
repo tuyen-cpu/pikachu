@@ -11,6 +11,7 @@ class Pikachu {
     init() {
         this.cell = document.createElement("td");
         this.cell.className = "pikachu";
+
         if (this.value != 0) {
             let img = document.createElement("img");
             img.src = "./assets/img/a" + this.value + ".png";

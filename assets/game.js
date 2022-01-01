@@ -11,6 +11,13 @@ class Game {
             this.rowMax = ROW + 2; //the actual number of rows of the matrix including the border (border value is 0)
             this.colMax = COL + 2; //the actual number of columns of the matrix including the border (border value is 0)
             this.mainArray = this.borderEmptyArray(this.shuffledArr(this.randomTwinArray()));
+            // this.mainArray = [
+            //     [0, 0, 0, 0, 0, 0],
+            //     [0, 1, 0, 1, 1, 0],
+            //     [0, 0, 0, 0, 0, 0],
+            //     [0, 0, 0, 0, 0, 0],
+            //     [0, 0, 0, 0, 0, 0]
+            // ]
             this.createBoardPikachu(this.mainArray);
         }
         /* Create elements cell + load image based on matrix */
@@ -43,7 +50,6 @@ class Game {
                 index = index + 2;
                 count++;
             }
-            console.log(array)
             return array;
         }
         // Mix index of element in array
@@ -53,7 +59,6 @@ class Game {
             const random = Math.floor(Math.random() * (i + 1));
             [newArr[i], newArr[random]] = [newArr[random], newArr[i]];
         }
-        console.log(newArr)
         return newArr
     };
     // Create border array with number 0
@@ -81,9 +86,10 @@ class Game {
                 (x < xt ? i++ : i--)) {
                 // console.log("[" + i + ", " + y + "]: " + this.mainArray[i][y])
                 if (this.mainArray[i][y]) {
-                    // this.pathArray = [];
+                    this.pathArray = [];
                     return false;
                 } else {
+                    console.log("V add " + this.getIndexOfCell(i, y))
                     this.pathArray.push(this.getIndexOfCell(i, y))
                 }
             }
@@ -95,9 +101,10 @@ class Game {
                 (y < yt ? i++ : i--)) {
                 // console.log("[" + x + ", " + i + "]: " + this.mainArray[x][i])
                 if (this.mainArray[x][i]) {
-                    // this.pathArray = [];
+                    this.pathArray = [];
                     return false;
                 } else {
+                    console.log("H add " + this.getIndexOfCell(x, i))
                     this.pathArray.push(this.getIndexOfCell(x, i))
                 }
             }
@@ -111,36 +118,26 @@ class Game {
             cellA = cellB;
             cellB = C;
         }
-        //th1
 
+        //case 1
         if (this.checkVertical(cellA[0] + 1, cellA[1], cellB[0]) && this.checkHorizontal(cellB[0], cellA[1], cellB[1])) {
-
-
             console.log("TH1")
             return true;
         }
-        //th2
 
+        //case 2
         for (let j = (cellA[1] - 1); j >= 0; j--) {
             if (this.mainArray[cellA[0]][j]) break;
-
-
             if (this.checkVertical((cellA[0]), j, cellB[0]) && this.checkHorizontal(cellB[0], j, cellB[1])) {
-
-
                 console.log("TH2")
                 return true;
             }
         }
 
-        //th3
+        //case 3
         for (let j = (cellA[1] + 1); j < this.colMax; j++) {
             if (this.mainArray[cellA[0]][j]) break;
-
             if (this.checkVertical((cellA[0]), j, cellB[0]) && this.checkHorizontal(cellB[0], j, cellB[1])) {
-
-
-
                 console.log("TH3")
                 return true;
             }
@@ -151,30 +148,22 @@ class Game {
             cellA = cellB;
             cellB = C;
         }
-
-        //th4
-
+        //case 4
         if (this.checkHorizontal(cellA[0], cellA[1] + 1, cellB[1]) && this.checkVertical(cellA[0], cellB[1], cellB[0])) {
-
-
             console.log("TH4")
             return true;
         }
-        //th5
-
+        //case 5
         for (let j = (cellA[0] - 1); j >= 0; j--) {
             if (this.mainArray[j][cellA[1]]) break;
 
             if (this.checkHorizontal(j, (cellA[1]), cellB[1]) && this.checkVertical(j, cellB[1], cellB[0])) {
-
-
                 console.log("TH5")
                 return true;
             }
         }
-        // this.arrMarked = [];
-        // this.arrVertical = [];
-        //th6
+
+        //case 6
         for (let j = (cellA[0] + 1); j < this.rowMax; j++) {
             if (this.mainArray[j][cellA[1]]) break;
 
@@ -185,8 +174,6 @@ class Game {
                 return true;
             }
         }
-        // this.arrMarked = [];
-        // this.arrVertical = [];
 
     }
     check(cell, x, y) {
@@ -226,12 +213,26 @@ class Game {
 
                             this.removeCell(this.getIndexOfCell(a0, a1));
                             this.removeCell(this.getIndexOfCell(b0, b1));
+
+                            const pikachu = document.querySelectorAll(".pikachu");
+                            this.pathArray.forEach((element) => {
+                                pikachu[element].classList.add("path");
+                                const time = setTimeout(() => { pikachu[element].classList.remove("path") }, 500);
+
+                            });
+
                             console.log(this.pathArray)
+                        } else {
+                            this.pathArray = [];
                         }
+                    } else {
+                        this.pathArray = [];
                     }
                     this.resetSelectedArray();
                 }
+                this.pathArray = [];
             }
+            console.log(this.pathArray)
 
         }
         // set selected array = null
@@ -262,7 +263,7 @@ class Game {
         //hidden cell
     removeCell(index) {
             const pikachu = document.querySelectorAll(".pikachu");
-            pikachu[index].style.visibility = "hidden"
+            // pikachu[index].style.visibility = "hidden"
             pikachu[index].innerHTML = "";
         }
         //get index of cell base x y from main array
