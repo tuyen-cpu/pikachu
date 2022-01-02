@@ -13,9 +13,41 @@
 
 <body>
     <div class="app">
-        <div id="board">
-
+        <div class="side-bar">
+            <div class="logo">
+                <img src="./assets/img/login.png" alt="" class="logo__img">
+            </div>
+            <div class="option">
+                <div class="option__item sound">
+                    <img src="./assets/img/volume.png" alt="" class="sound__img">
+                </div>
+                <div class="option__item exchange">
+                    <img src="./assets/img/convert.png" alt="" class="exchange__img"><span>3</span>
+                </div>
+                <div class="option__item help">
+                    <img src="./assets/img/hint.png" alt="" class="help__img"><span>3</span>
+                </div>
+                <div class="option__item reset">
+                    <img src="./assets/img/btn-reset.png" alt="" class="reset__img">
+                </div>
+            </div>
         </div>
+        <div class="center">
+            <div class="top">
+                <div class="level">
+                    <span class="level__title">LEVEL</span>
+                    <span class="level__value">1</span>
+                </div>
+                <div class="timer">
+                    <div class="timer__bar"></div>
+                    <div class="timer__score">SCORE: <span id="score">20</span></div>
+                </div>
+            </div>
+            <div id="board">
+
+            </div>
+        </div>
+
     </div>
     <script src="./assets/pikachu.js"></script>
     <script src="./assets/game.js"></script>

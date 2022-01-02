@@ -1,5 +1,5 @@
-var COL = 4;
-var ROW = 4;
+var COL = 12;
+var ROW = 8;
 class Game {
     constructor() {
             this.selectedArray = [

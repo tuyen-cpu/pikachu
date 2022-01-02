@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 img {
@@ -57,5 +58,100 @@ td {
 }
 
 #board {
-    margin: auto;
+    margin-top: -20px;
 }
+
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {}
+
+.logo__img {
+    width: 250px;
+}
+
+.option div {
+    margin: 20px 0;
+}
+
+.option div:hover img {
+    transform: scale(105%);
+    cursor: url("../img/pointer.png"), url("../img/pointer.png"), default;
+}
+
+.option {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.option__item span {
+    color: #FFCB07;
+    position: absolute;
+    top: 80%;
+    right: 2px;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+}
+
+.top {
+    margin-top: 40px;
+}
+
+.level {
+    /* */
+    color: #f5e616;
+    margin-left: 40px;
+}
+
+.level__title {
+    font-size: 28px;
+    letter-spacing: 2px;
+}
+
+.level__value {
+    font-size: 40px;
+}
+
+.timer__bar {
+    height: 20px;
+    background: linear-gradient(to right, red, yellow, rgb(9, 172, 9));
+    border: 0.5px solid rgb(51, 51, 51);
+    flex: 1;
+}
+
+.timer {
+    margin: 10px 40px 0 40px;
+    display: flex;
+}
+
+.sound {}
+
+.sound__img {}
+
+.exchange {
+    position: relative;
+}
+
+.timer__score {
+    color: #f5e616;
+    margin-left: 10px;
+    letter-spacing: 2px;
+}
+
+.exchange__img {}
+
+.help {
+    position: relative;
+}
+
+.help__img {}
+
+.reset {}
+
+.reset__img {}
