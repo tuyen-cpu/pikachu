@@ -130,9 +130,117 @@ td {
     display: flex;
 }
 
-.sound {}
+.pikachu {
+    position: relative;
+}
 
-.sound__img {}
+.line-vertical::before {
+    content: "";
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+    width: 3px;
+    height: 100%;
+    background-color: #FFCB07;
+}
+
+.line-horizontal::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateX(50%);
+    width: 100%;
+    height: 3px;
+    background-color: #FFCB07;
+}
+
+.line-c-1::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 53%;
+    height: 3px;
+    left: 0;
+    background-color: #FFCB07;
+}
+
+.line-c-1::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 50%;
+    transform: translateX(50%);
+    width: 3px;
+    height: 52%;
+    background-color: #FFCB07;
+}
+
+.line-c-2::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 53%;
+    height: 3px;
+    right: 0;
+    background-color: #FFCB07;
+}
+
+.line-c-2::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 50%;
+    transform: translateX(50%);
+    width: 3px;
+    height: 52%;
+    background-color: #FFCB07;
+}
+
+.line-c-3::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 53%;
+    height: 3px;
+    right: 0;
+    background-color: #FFCB07;
+}
+
+.line-c-3::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%);
+    width: 3px;
+    height: 52%;
+    background-color: #FFCB07;
+}
+
+.line-c-4::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 53%;
+    height: 3px;
+    left: 0;
+    background-color: #FFCB07;
+}
+
+.line-c-4::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%);
+    width: 3px;
+    height: 52%;
+    background-color: #FFCB07;
+}
 
 .exchange {
     position: relative;

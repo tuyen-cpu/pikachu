@@ -6,6 +6,7 @@ class Game {
                 [null, null],
                 [null, null]
             ];
+            this.caseAlgorithm = null
             this.pathArray = []; // Array contain path when connect 2 cell
             this.typeOfPikachu = 3; // type number of pika chu init is 7
             this.rowMax = ROW + 2; //the actual number of rows of the matrix including the border (border value is 0)
@@ -88,7 +89,9 @@ class Game {
                 if (this.mainArray[i][y]) {
                     this.pathArray = [];
                     return false;
-                } else { this.pathArray.push(this.getIndexOfCell(i, y)) }
+                } else {
+                    this.pathArray.push([i, y])
+                }
             }
             return true;
         }
@@ -101,31 +104,43 @@ class Game {
                     this.pathArray = [];
                     return false;
                 } else {
-                    this.pathArray.push(this.getIndexOfCell(x, i))
+                    this.pathArray.push([x, i])
                 }
             }
             return true;
         }
         //Check cellA and cellB is connect ??=> true ? false
     isConnect(cellA, cellB) {
-
+        let arrTemp = [] //horizontal path 
         if (cellA[0] > cellB[0]) {
             let C = cellA;
             cellA = cellB;
             cellB = C;
         }
-
-        //case 1
+        if (cellA[1] > cellB[1]) {
+            let C = cellA;
+            cellA = cellB;
+            cellB = C;
+        }
+        console.log(cellA, cellB)
+            //case 1
         if (this.checkVertical(cellA[0] + 1, cellA[1], cellB[0]) && this.checkHorizontal(cellB[0], cellA[1], cellB[1])) {
             console.log("TH1")
+            this.caseAlgorithm = 1
             return true;
         }
 
         //case 2
         for (let j = (cellA[1] - 1); j >= 0; j--) {
+
             if (this.mainArray[cellA[0]][j]) break;
+            arrTemp.push([cellA[0], j])
             if (this.checkVertical((cellA[0]), j, cellB[0]) && this.checkHorizontal(cellB[0], j, cellB[1])) {
                 console.log("TH2")
+                arrTemp.pop(); // delete duplicate  element
+                this.pathArray = arrTemp.concat(this.pathArray) //concat 2 array path: arrTemp is horizontal path 
+                arrTemp = []
+                this.caseAlgorithm = 2
                 return true;
             }
         }
@@ -133,20 +148,22 @@ class Game {
         //case 3
         for (let j = (cellA[1] + 1); j < this.colMax; j++) {
             if (this.mainArray[cellA[0]][j]) break;
+            arrTemp.push([cellA[0], j])
             if (this.checkVertical((cellA[0]), j, cellB[0]) && this.checkHorizontal(cellB[0], j, cellB[1])) {
                 console.log("TH3")
+                arrTemp.pop(); // delete duplicate  element
+                this.pathArray = arrTemp.concat(this.pathArray) //concat 2 array path: arrTemp is horizontal path 
+                arrTemp = []
+                this.caseAlgorithm = 3
                 return true;
             }
         }
 
-        if (cellA[1] > cellB[1]) {
-            let C = cellA;
-            cellA = cellB;
-            cellB = C;
-        }
+
         //case 4
         if (this.checkHorizontal(cellA[0], cellA[1] + 1, cellB[1]) && this.checkVertical(cellA[0], cellB[1], cellB[0])) {
             console.log("TH4")
+            this.caseAlgorithm = 4
             return true;
         }
         //case 5
@@ -155,17 +172,17 @@ class Game {
 
             if (this.checkHorizontal(j, (cellA[1]), cellB[1]) && this.checkVertical(j, cellB[1], cellB[0])) {
                 console.log("TH5")
+                this.caseAlgorithm = 5
                 return true;
             }
         }
 
         //case 6
         for (let j = (cellA[0] + 1); j < this.rowMax; j++) {
+            console.log(cellA, cellB)
             if (this.mainArray[j][cellA[1]]) break;
-
             if (this.checkHorizontal(j, (cellA[1]), cellB[1]) && this.checkVertical(j, cellB[1], cellB[0])) {
-
-
+                this.caseAlgorithm = 6
                 console.log("TH6")
                 return true;
             }
@@ -173,65 +190,148 @@ class Game {
 
     }
     check(cell, x, y) {
-            /*
-            selectedArray[a][b]: a=[0,1], b[0,1]
-            */
-            let a0 = this.selectedArray[0][0];
-            let a1 = this.selectedArray[0][1];
-            if (!a0) {
-                // when you haven't select any cell
-                this.selectedArray[0] = [x, y];
-                a0 = this.selectedArray[0][0];
-                a1 = this.selectedArray[0][1];
-                console.log(this.mainArray[a0][a1])
-                if (this.mainArray[a0][a1]) {
-                    this.borderCell(cell)
-                }
-            } else {
-                //when you select cell 2
-                this.selectedArray[1] = [x, y];
-                let b0 = this.selectedArray[1][0];
-                let b1 = this.selectedArray[1][1];
-                this.clearBorderCell(this.getIndexOfCell(a0, a1));
-                this.clearBorderCell(this.getIndexOfCell(b0, b1));
-                if (this.mainArray[b0][b1]) {
-                    // cell != number 0
-                    if (JSON.stringify(this.selectedArray[0]) === JSON.stringify(this.selectedArray[1])) {
-                        // 2 selected cells is same
-                        this.resetSelectedArray();
-                        return;
-                    } else {
-                        // 2 selected cells have different
-                        this.clearBorderCell(this.getIndexOfCell(a0, a1));
-                        this.clearBorderCell(this.getIndexOfCell(b0, b1));
-                        if (this.mainArray[a0][a1] == this.mainArray[b0][b1]) {
-                            // 2 selected cells have the same value
-                            if (this.isConnect(this.selectedArray[0], this.selectedArray[1])) {
-                                this.pathArray.unshift(this.getIndexOfCell(a0, a1)); // first index of path 
-                                this.pathArray.push(this.getIndexOfCell(b0, b1)); //last index of path 
+        /*
+        selectedArray[a][b]: a=[0,1], b[0,1]
+        */
+        let a0 = this.selectedArray[0][0];
+        let a1 = this.selectedArray[0][1];
+        if (!a0) {
+            // when you haven't select any cell
+            this.selectedArray[0] = [x, y];
+            a0 = this.selectedArray[0][0];
+            a1 = this.selectedArray[0][1];
+            if (this.mainArray[a0][a1]) {
+                this.borderCell(cell)
+            }
+        } else {
+            //when you select cell 2
+            this.selectedArray[1] = [x, y]
+            let b0 = this.selectedArray[1][0]
+            let b1 = this.selectedArray[1][1]
+            this.clearBorderCell(this.getIndexOfCell(a0, a1))
+            this.clearBorderCell(this.getIndexOfCell(b0, b1))
+            if (this.mainArray[b0][b1]) {
+                // cell != number 0
+                if (JSON.stringify(this.selectedArray[0]) === JSON.stringify(this.selectedArray[1])) {
+                    // 2 selected cells is same
+                    this.resetSelectedArray()
+                    return;
+                } else {
+                    // 2 selected cells have different
+                    this.clearBorderCell(this.getIndexOfCell(a0, a1))
+                    this.clearBorderCell(this.getIndexOfCell(b0, b1))
+                    if (this.mainArray[a0][a1] == this.mainArray[b0][b1]) {
+                        // 2 selected cells have the same value
+                        if (this.isConnect(this.selectedArray[0], this.selectedArray[1])) {
 
-                                this.mainArray[a0][a1] = 0;
-                                this.mainArray[b0][b1] = 0;
-
-                                this.removeCell(this.getIndexOfCell(a0, a1));
-                                this.removeCell(this.getIndexOfCell(b0, b1));
-
-                                const pikachu = document.querySelectorAll(".pikachu");
-                                this.pathArray.forEach((element) => {
-                                    pikachu[element].classList.add("path");
-                                    const time = setTimeout(() => { pikachu[element].classList.remove("path") }, 500);
-
-                                });
+                            if (a1 > b1) {
+                                console.log("0 > 1")
+                                this.pathArray.unshift([b0, b1]); // first index of path 
+                                this.pathArray.push([a0, a1]); //last index of path 
                             } else {
-                                this.pathArray = [];
+                                this.pathArray.unshift([a0, a1]); // first index of path 
+                                this.pathArray.push([b0, b1]);
                             }
+
+                            this.mainArray[a0][a1] = 0
+                            this.mainArray[b0][b1] = 0
+                            this.removeCell(this.getIndexOfCell(a0, a1))
+                            this.removeCell(this.getIndexOfCell(b0, b1))
+                            this.drawPath()
+                                // pikachu[element].classList.add("path");
+                                // const time = setTimeout(() => { pikachu[element].classList.remove("path") }, 500);
+                                // console.log(element[0]<)
+
+
+
                         } else {
-                            this.pathArray = [];
+                            this.pathArray = []
                         }
-                        this.resetSelectedArray();
+                    } else {
+                        this.pathArray = []
                     }
-                    this.pathArray = [];
+                    this.resetSelectedArray()
+                    console.log(this.pathArray)
                 }
+                this.pathArray = [];
+            }
+        }
+    }
+    drawPath() {
+            const pikachu = document.querySelectorAll(".pikachu")
+            let zigzag = 1;
+            for (let i = 0; i < this.pathArray.length; i++) {
+                let prev = this.pathArray[i - 1]
+                let next = this.pathArray[i + 1]
+                let current = this.pathArray[i]
+                if (prev && next && i != 0 && i != this.pathArray.length - 1) {
+                    switch (this.caseAlgorithm) {
+                        case 1:
+                            if (current[0] < next[0] && current[1] == next[1]) {
+                                console.log("xuống")
+                            }
+                            break;
+                        case 2:
+                            if (prev[0] < next[0] && prev[1] < next[1]) {
+                                console.log("trên-phải", current)
+                            } else if (prev[0] < next[0] && prev[1] > next[1] && zigzag == 1) {
+                                zigzag = 2;
+                                console.log("phải dưới", current)
+                            } else if (prev[0] < next[0] && prev[1] > next[1] && zigzag == 2) {
+                                zigzag = 1
+                                console.log("trên-trái", current)
+                            } else if (current[0] < next[0] && current[1] == next[1]) {
+                                console.log("xuống", current)
+                            } else {
+                                console.log("ngang", current)
+                            }
+                            break;
+                        case 3:
+                            if (prev[0] < next[0] && prev[1] > next[1]) {
+                                console.log("trên-trái", current)
+                            } else if (prev[0] < next[0] && prev[1] < next[1] && zigzag == 1) {
+                                zigzag = 2
+                                console.log("trái-dưới", current)
+                            } else if (prev[0] < next[0] && prev[1] < next[1] && zigzag == 2) {
+                                zigzag = 1
+                                console.log("trên-phải", current)
+                            } else if (current[0] < next[0] && current[1] == next[1]) {
+                                console.log("xuống", current)
+                            } else {
+                                console.log("ngang", current)
+                            }
+                            break;
+                        case 4:
+                            if (current[0] == next[0] && current[1] < next[1]) {
+                                console.log("ngang")
+                            }
+                            break;
+                        case 5:
+                            if (prev[0] > next[0] && prev[1] < next[1]) {
+                                console.log("dưới-phải")
+                            } else if (prev[0] < next[0] && prev[1] < next[1]) {
+                                console.log("dưới-trái")
+                            } else if (current[0] == next[0] && current[1] < next[1]) {
+                                console.log("ngang", current)
+                            } else {
+                                console.log("dọc", current)
+                            }
+                            break;
+                        case 6:
+                            if (prev[0] < next[0] && prev[1] < next[1]) {
+                                console.log("trên-phải")
+                            } else if (prev[0] > next[0] && prev[1] < next[1]) {
+                                console.log("trên-trái")
+                            } else if (current[0] == next[0] && current[1] < next[1]) {
+                                console.log("ngang", current)
+                            } else {
+                                console.log("dọc", current)
+                            }
+                            break;
+
+                    }
+                }
+
             }
         }
         // set selected array = null
@@ -243,10 +343,11 @@ class Game {
         }
         //Border cell 
     borderCell(cell) {
-            cell.isSelected = true;
-            cell.classList.add("hover")
-        }
-        // remove border cell 
+        cell.isSelected = true;
+        cell.classList.add("hover")
+    }
+
+    // remove border cell 
     clearBorderCell(index) {
             const pikachu = document.querySelectorAll(".pikachu");
             for (var i = 0; i < this.rowMax; i++) {
