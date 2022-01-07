@@ -18,7 +18,7 @@ body {
     width: 900px;
     height: 600px;
     background-repeat: no-repeat;
-    background-image: url(../img/bg1.png);
+    /* background-image: url(../img/bg1.png); */
     border: 2px solid #fff;
     display: flex;
 }
@@ -47,11 +47,12 @@ table {
 }
 
 .hover {
-    --weight: 2px;
+    --weight: 1px;
     top: calc(0px - var(--weight));
     left: calc(0px - var(--weight));
     position: absolute;
-    border: var(--weight) solid red;
+    border: var(--weight) solid #fff;
+    box-shadow: 0 10px 10px #FF3131, 0 0 20px #FF3131, 0 0 40px #FF3131, 0 0 80px #FF3131, 0 0 160px #FF3131;
     z-index: 2;
 }
 
@@ -109,8 +110,9 @@ td {
 
 .level {
     /* */
-    color: #f5e616;
+    color: #fff;
     margin-left: 40px;
+    text-shadow: 0 0px 10px #03bcf4, 0 0 20px #03bcf4, 0 0 40px #03bcf4, 0 0 80px #03bcf4, 0 0 160px #03bcf4;
 }
 
 .level__title {
@@ -146,7 +148,8 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 100%;
-    background-color: red;
+    background-color: #fff;
+    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
 }
 
 .line-lr::before {
@@ -157,7 +160,8 @@ td {
     width: 100%;
     height: 3px;
     left: 0;
-    background-color: red;
+    background-color: #fff;
+    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
 }
 
 .line-ul::before {
@@ -168,7 +172,8 @@ td {
     width: 53%;
     height: 3px;
     left: 0;
-    background-color: red;
+    background-color: #fff;
+    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
 }
 
 .line-ul::after {
@@ -179,7 +184,8 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
-    background-color: red;
+    background-color: #fff;
+    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
 }
 
 .line-ur::before {
@@ -190,7 +196,8 @@ td {
     width: 53%;
     height: 3px;
     right: 0;
-    background-color: red;
+    background-color: #fff;
+    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
 }
 
 .line-ur::after {
@@ -201,7 +208,8 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
-    background-color: red;
+    background-color: #fff;
+    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
 }
 
 .line-dr::before {
@@ -212,7 +220,8 @@ td {
     width: 53%;
     height: 3px;
     right: 0;
-    background-color: red;
+    background-color: #fff;
+    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
 }
 
 .line-dr::after {
@@ -223,7 +232,8 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
-    background-color: red;
+    background-color: #fff;
+    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
 }
 
 .line-dl::before {
@@ -234,7 +244,8 @@ td {
     width: 53%;
     height: 3px;
     left: 0;
-    background-color: red;
+    background-color: #fff;
+    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
 }
 
 .line-dl::after {
@@ -245,7 +256,8 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
-    background-color: red;
+    background-color: #fff;
+    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
 }
 
 .line-u::before {
@@ -256,7 +268,8 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
-    background-color: red;
+    background-color: #fff;
+    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
 }
 
 .line-d::before {
@@ -267,7 +280,8 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
-    background-color: red;
+    background-color: #fff;
+    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
 }
 
 .line-r::before {
@@ -278,7 +292,8 @@ td {
     width: 53%;
     height: 3px;
     right: 0;
-    background-color: red;
+    background-color: #fff;
+    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
 }
 
 .line-l::before {
@@ -289,7 +304,8 @@ td {
     width: 53%;
     height: 3px;
     left: 0;
-    background-color: red;
+    background-color: #fff;
+    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
 }
 
 .exchange {
