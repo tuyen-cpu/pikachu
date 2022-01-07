@@ -88,7 +88,7 @@ td {
 }
 
 .option__item span {
-    color: #FFCB07;
+    color: red;
     position: absolute;
     top: 80%;
     right: 2px;
@@ -134,27 +134,29 @@ td {
     position: relative;
 }
 
-.line-vertical::before {
+.line-ud::before {
     content: "";
     position: absolute;
+    top: 0;
     right: 50%;
     transform: translateX(50%);
     width: 3px;
     height: 100%;
-    background-color: #FFCB07;
+    background-color: red;
 }
 
-.line-horizontal::before {
+.line-lr::before {
     content: "";
     position: absolute;
     top: 50%;
-    transform: translateX(50%);
+    transform: translateY(-50%);
     width: 100%;
     height: 3px;
-    background-color: #FFCB07;
+    left: 0;
+    background-color: red;
 }
 
-.line-c-1::before {
+.line-ul::before {
     content: "";
     position: absolute;
     top: 50%;
@@ -162,10 +164,10 @@ td {
     width: 53%;
     height: 3px;
     left: 0;
-    background-color: #FFCB07;
+    background-color: red;
 }
 
-.line-c-1::after {
+.line-ul::after {
     content: "";
     position: absolute;
     top: 0;
@@ -173,10 +175,10 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
-    background-color: #FFCB07;
+    background-color: red;
 }
 
-.line-c-2::before {
+.line-ur::before {
     content: "";
     position: absolute;
     top: 50%;
@@ -184,10 +186,10 @@ td {
     width: 53%;
     height: 3px;
     right: 0;
-    background-color: #FFCB07;
+    background-color: red;
 }
 
-.line-c-2::after {
+.line-ur::after {
     content: "";
     position: absolute;
     top: 0;
@@ -195,10 +197,10 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
-    background-color: #FFCB07;
+    background-color: red;
 }
 
-.line-c-3::before {
+.line-dr::before {
     content: "";
     position: absolute;
     top: 50%;
@@ -206,10 +208,10 @@ td {
     width: 53%;
     height: 3px;
     right: 0;
-    background-color: #FFCB07;
+    background-color: red;
 }
 
-.line-c-3::after {
+.line-dr::after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -217,10 +219,10 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
-    background-color: #FFCB07;
+    background-color: red;
 }
 
-.line-c-4::before {
+.line-dl::before {
     content: "";
     position: absolute;
     top: 50%;
@@ -228,10 +230,10 @@ td {
     width: 53%;
     height: 3px;
     left: 0;
-    background-color: #FFCB07;
+    background-color: red;
 }
 
-.line-c-4::after {
+.line-dl::after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -239,7 +241,51 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
-    background-color: #FFCB07;
+    background-color: red;
+}
+
+.line-u::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 50%;
+    transform: translateX(50%);
+    width: 3px;
+    height: 52%;
+    background-color: red;
+}
+
+.line-d::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%);
+    width: 3px;
+    height: 52%;
+    background-color: red;
+}
+
+.line-r::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 53%;
+    height: 3px;
+    right: 0;
+    background-color: red;
+}
+
+.line-l::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 53%;
+    height: 3px;
+    left: 0;
+    background-color: red;
 }
 
 .exchange {
