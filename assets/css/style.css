@@ -47,8 +47,12 @@ table {
 }
 
 .hover {
-    opacity: 0.5;
-    box-shadow: 0px 0px 5px 2px red;
+    --weight: 2px;
+    top: calc(0px - var(--weight));
+    left: calc(0px - var(--weight));
+    position: absolute;
+    border: var(--weight) solid red;
+    z-index: 2;
 }
 
 td {

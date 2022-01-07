@@ -363,6 +363,7 @@ class Game {
                         break;
                     case 5:
                         if (prev[0] < next[0] && prev[1] < next[1]) {
+                            direct = 'd'
                             this.directList.push('dl')
                                 // console.log("dưới-trái")
                         } else if (prev[0] > next[0] && prev[1] < next[1] && zigzag == 1) {
@@ -497,7 +498,7 @@ class Game {
                 this.removeClassStartsWith(pikachu[i], 'line-');
             }
             console.log("tuyen")
-        }, 3000)
+        }, 500)
 
     }
     removeClassStartsWith(node, prefix) {
@@ -507,41 +508,7 @@ class Game {
     }
     drawPath(array, pikachu) {
             for (let i = 0; i < array.length; i++) {
-                // console.log(pikachu[this.getIndexOfCell(this.pathArray[i][0], this.pathArray[i][1])])
                 pikachu[this.getIndexOfCell(this.pathArray[i][0], this.pathArray[i][1])].classList.add(`line-${array[i]}`)
-                    // switch (array[i]) {
-                    //     case 'ud':
-                    //         pikachu[this.getIndexOfCell(this.pathArray[i][0], this.pathArray[i][1])].classList.add('line-u-d')
-                    //         break
-                    //     case 'ul':
-                    //         pikachu[this.getIndexOfCell(this.pathArray[i][0], this.pathArray[i][1])].classList.add('line-u-l')
-                    //         break
-                    //     case 'ur':
-                    //         pikachu[this.getIndexOfCell(this.pathArray[i][0], this.pathArray[i][1])].classList.add('line-u-r')
-                    //         break
-                    //     case 'dl':
-                    //         pikachu[this.getIndexOfCell(this.pathArray[i][0], this.pathArray[i][1])].classList.add('line-d-l')
-                    //         break
-                    //     case 'dr':
-                    //         pikachu[this.getIndexOfCell(this.pathArray[i][0], this.pathArray[i][1])].classList.add('line-d-r')
-                    //         break
-                    //     case 'lr':
-                    //         pikachu[this.getIndexOfCell(this.pathArray[i][0], this.pathArray[i][1])].classList.add('line-l-r')
-                    //         break
-                    //     case 'u':
-                    //         pikachu[this.getIndexOfCell(this.pathArray[i][0], this.pathArray[i][1])].classList.add('line-u')
-                    //         break
-                    //     case 'd':
-                    //         pikachu[this.getIndexOfCell(this.pathArray[i][0], this.pathArray[i][1])].classList.add('line-d')
-                    //         break
-                    //     case 'r':
-                    //         pikachu[this.getIndexOfCell(this.pathArray[i][0], this.pathArray[i][1])].classList.add('line-r')
-                    //         break
-                    //     case 'l':
-                    //         pikachu[this.getIndexOfCell(this.pathArray[i][0], this.pathArray[i][1])].classList.add('line-l')
-                    //         break
-                    // }
-
             }
         }
         // set selected array = null
@@ -554,7 +521,7 @@ class Game {
         //Border cell 
     borderCell(cell) {
         cell.isSelected = true;
-        cell.classList.add("hover")
+        cell.childNodes[0].classList.add("hover")
     }
 
     // remove border cell 
@@ -563,8 +530,7 @@ class Game {
             for (var i = 0; i < this.rowMax; i++) {
                 for (var j = 0; j < this.colMax; j++) {
                     pikachu[index].isSelected = false;
-                    pikachu[index].classList.remove("hover")
-
+                    pikachu[index].childNodes[0].classList.remove("hover")
                 }
             }
         }
