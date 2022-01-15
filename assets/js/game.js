@@ -1,5 +1,6 @@
 import Music from "./music.js"
 import Pikachu from "./pikachu.js"
+import { srcSelect, srcConnect, srcMiss } from './variables.js';
 var COL = 12;
 var ROW = 8;
 class Game {
@@ -23,8 +24,7 @@ class Game {
             //     [0, 0, 0, 0, 0, 0]
             // ]
             this.createBoardPikachu(this.mainArray);
-            this.sound = document.getElementById('sound')
-            console.log(sound)
+            this.music = new Music(srcSelect)
 
         }
         /* Create elements cell + load image based on matrix */
@@ -218,6 +218,8 @@ class Game {
                 this.selectedArray[0] = [x, y];
                 a0 = this.selectedArray[0][0];
                 a1 = this.selectedArray[0][1];
+                this.music.setMusic(srcSelect)
+                this.music.play()
                 this.borderCell(cell)
             } else if (a0 && this.mainArray[x][y]) {
                 //when you select cell 2
@@ -238,6 +240,8 @@ class Game {
                         if (this.mainArray[a0][a1] == this.mainArray[b0][b1]) {
                             // 2 selected cells have the same value
                             if (this.isConnect(this.selectedArray[0], this.selectedArray[1])) {
+                                this.music.setMusic(srcConnect)
+                                this.music.play()
                                 this.mainArray[a0][a1] = 0
                                 this.mainArray[b0][b1] = 0
                                 this.removeCell(this.getIndexOfCell(a0, a1))
@@ -245,9 +249,13 @@ class Game {
                                 this.findDirect()
                             } else {
                                 this.pathArray = []
+                                this.music.setMusic(srcMiss)
+                                this.music.play()
                             }
                         } else {
                             this.pathArray = []
+                            this.music.setMusic(srcMiss)
+                            this.music.play()
                         }
                         this.resetSelectedArray()
                     }

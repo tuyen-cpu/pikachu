@@ -96,6 +96,11 @@ td {
     text-align: center;
 }
 
+.option__item {
+    width: 60px;
+    height: 60px;
+}
+
 .option__item span {
     color: red;
     position: absolute;
