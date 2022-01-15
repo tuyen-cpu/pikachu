@@ -11,6 +11,7 @@ img {
 body {
     background-color: #000;
     display: flex;
+    user-select: none;
 }
 
 .app {
@@ -18,9 +19,11 @@ body {
     width: 900px;
     height: 600px;
     background-repeat: no-repeat;
-    /* background-image: url(../img/bg1.png); */
+    background-image: url(../img/background-1.png);
+    background-size: cover;
     border: 2px solid #fff;
     display: flex;
+    border-radius: 10px;
 }
 
 .path::before {
@@ -42,7 +45,7 @@ table {
 }
 
 .pikachu:hover {
-    opacity: 0.5;
+    opacity: 0.6;
     cursor: url("../img/pointer.png"), url("../img/pointer.png"), default;
 }
 
@@ -52,7 +55,8 @@ table {
     left: calc(0px - var(--weight));
     position: absolute;
     border: var(--weight) solid #fff;
-    box-shadow: 0 10px 10px #FF3131, 0 0 20px #FF3131, 0 0 40px #FF3131, 0 0 80px #FF3131, 0 0 160px #FF3131;
+    box-shadow: 0 0px 7px #b3ff51, 0 0 7px #FF3131, 0 0 7px #FF3131, 0 0 7px #b3ff51, 0 0 7px #FF3131;
+    /* box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51; */
     z-index: 2;
 }
 
@@ -138,6 +142,7 @@ td {
 
 .pikachu {
     position: relative;
+    user-select: none;
 }
 
 .line-ud::before {
@@ -148,8 +153,9 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 100%;
+    z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
+    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
 }
 
 .line-lr::before {
@@ -160,8 +166,9 @@ td {
     width: 100%;
     height: 3px;
     left: 0;
+    z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
+    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
 }
 
 .line-ul::before {
@@ -172,8 +179,9 @@ td {
     width: 53%;
     height: 3px;
     left: 0;
+    z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
+    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
 }
 
 .line-ul::after {
@@ -184,8 +192,9 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
+    z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
+    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
 }
 
 .line-ur::before {
@@ -196,8 +205,9 @@ td {
     width: 53%;
     height: 3px;
     right: 0;
+    z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
+    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
 }
 
 .line-ur::after {
@@ -208,8 +218,9 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
+    z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
+    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
 }
 
 .line-dr::before {
@@ -220,8 +231,9 @@ td {
     width: 53%;
     height: 3px;
     right: 0;
+    z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
+    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
 }
 
 .line-dr::after {
@@ -232,8 +244,9 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
+    z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
+    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
 }
 
 .line-dl::before {
@@ -244,8 +257,9 @@ td {
     width: 53%;
     height: 3px;
     left: 0;
+    z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
+    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
 }
 
 .line-dl::after {
@@ -256,8 +270,9 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
+    z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
+    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
 }
 
 .line-u::before {
@@ -268,8 +283,9 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
+    z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
+    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
 }
 
 .line-d::before {
@@ -280,8 +296,9 @@ td {
     transform: translateX(50%);
     width: 3px;
     height: 52%;
+    z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
+    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
 }
 
 .line-r::before {
@@ -292,8 +309,9 @@ td {
     width: 53%;
     height: 3px;
     right: 0;
+    z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
+    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
 }
 
 .line-l::before {
@@ -304,8 +322,9 @@ td {
     width: 53%;
     height: 3px;
     left: 0;
+    z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131, 0 0 50px #FF3131;
+    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
 }
 
 .exchange {

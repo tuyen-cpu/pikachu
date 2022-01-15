@@ -22,10 +22,10 @@
                     <img src="./assets/img/volume.png" alt="" class="sound__img">
                 </div>
                 <div class="option__item exchange">
-                    <img src="./assets/img/convert.png" alt="" class="exchange__img"><span>3</span>
+                    <lottie-player src="https://assets5.lottiefiles.com/packages/lf20_nzk92xfr.json" background="transparent" speed="1" style="width: 50px; height: 50px;" loop autoplay></lottie-player><span>3</span>
                 </div>
                 <div class="option__item help">
-                    <img src="./assets/img/hint.png" alt="" class="help__img"><span>3</span>
+                    <lottie-player src="https://assets1.lottiefiles.com/private_files/lf30_jo7huq2d.json" background="transparent" speed="1" style="width: 80px; height: 80px;" loop autoplay></lottie-player><span>3</span>
                 </div>
                 <div class="option__item reset">
                     <img src="./assets/img/btn-reset.png" alt="" class="reset__img">
@@ -42,15 +42,19 @@
                     <div class="timer__bar"></div>
                     <div class="timer__score">SCORE: <span id="score">20</span></div>
                 </div>
+
+                <!-- <lottie-player src="./assets/json/time.json" background="transparent" speed="1" style="width: 50px; height: 50px;" loop autoplay></lottie-player> -->
             </div>
             <div id="board">
 
             </div>
-        </div>
 
+        </div>
+        <audio id="sound" src=""></audio>
     </div>
-    <script src="./assets/pikachu.js"></script>
-    <script src="./assets/game.js"></script>
+    <script type="module" src="./assets/js/game.js"></script>
+    <script src="./assets/js/lottie-player.js"></script>
+
 </body>
 
 </html>
