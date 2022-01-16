@@ -1,8 +1,8 @@
 import Music from "./music.js"
 import Pikachu from "./pikachu.js"
 import { srcSelect, srcConnect, srcMiss } from './variables.js';
-var COL = 12;
-var ROW = 8;
+var COL = 16;
+var ROW = 9;
 class Game {
     constructor() {
             this.selectedArray = [

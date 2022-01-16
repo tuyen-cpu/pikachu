@@ -15,15 +15,16 @@ body {
 }
 
 .app {
-    margin: auto;
+    margin: 30px auto auto auto;
     width: 900px;
     height: 600px;
     background-repeat: no-repeat;
-    background-image: url(../img/background-1.png);
+    background-image: url(../img/background-2.png);
     background-size: cover;
     border: 2px solid #fff;
     display: flex;
     border-radius: 10px;
+    position: relative;
 }
 
 .path::before {
@@ -67,19 +68,27 @@ td {
 }
 
 #board {
-    margin-top: -20px;
+    /* margin-top: -20px; */
 }
 
 .side-bar {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
+    justify-content: center;
 }
 
-.logo {}
+.logo {
+    position: absolute;
+    margin: 8px;
+    top: -41px;
+    left: -50px;
+    transform: rotate( 339deg);
+}
 
 .logo__img {
-    width: 250px;
+    width: 180px;
 }
 
 .option div {
@@ -99,6 +108,7 @@ td {
 .option__item {
     width: 60px;
     height: 60px;
+    cursor: pointer;
 }
 
 .option__item span {
@@ -114,35 +124,50 @@ td {
 }
 
 .top {
-    margin-top: 40px;
-}
-
-.level {
-    /* */
-    color: #fff;
-    margin-left: 40px;
-    text-shadow: 0 0px 10px #03bcf4, 0 0 20px #03bcf4, 0 0 40px #03bcf4, 0 0 80px #03bcf4, 0 0 160px #03bcf4;
+    margin-top: 20px;
 }
 
 .level__title {
-    font-size: 28px;
-    letter-spacing: 2px;
+    margin-top: 50px;
+    font-family: 'lazer84';
+    letter-spacing: 0.5px;
+    font-size: 1.5rem;
+    color: #ffc400;
+    text-shadow: 1px 1px 4px #000;
+    /* text-shadow: 0 0px 10px #03bcf4, 0 0 20px #03bcf4, 0 0 40px #03bcf4, 0 0 80px #03bcf4, 0 0 160px #03bcf4; */
 }
 
 .level__value {
-    font-size: 40px;
+    font-family: 'lazer84';
+    letter-spacing: 0.5px;
 }
 
 .timer__bar {
-    height: 20px;
-    background: linear-gradient(to right, red, yellow, rgb(9, 172, 9));
-    border: 0.5px solid rgb(51, 51, 51);
+    /* rgb(148,213,163) */
+    height: 22px;
+    /* background: linear-gradient(to right, red, yellow, rgb(9, 172, 9));
+     */
+    background: linear-gradient(to right, rgb(255, 119, 119), yellow, rgb(148, 213, 163));
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 25px;
     flex: 1;
 }
 
 .timer {
     margin: 10px 40px 0 40px;
     display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.timer__icon-wrapper {
+    position: absolute;
+    transform: rotate( 180deg);
+    right: -30px;
+}
+
+.timer__icon {
+    height: 65px;
 }
 
 .pikachu {
@@ -161,6 +186,7 @@ td {
     z-index: 3;
     background-color: #fff;
     box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    background-color: #ffb300;
 }
 
 .line-lr::before {
@@ -174,6 +200,7 @@ td {
     z-index: 3;
     background-color: #fff;
     box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    background-color: #ffb300;
 }
 
 .line-ul::before {
@@ -187,6 +214,7 @@ td {
     z-index: 3;
     background-color: #fff;
     box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    background-color: #ffb300;
 }
 
 .line-ul::after {
@@ -200,6 +228,7 @@ td {
     z-index: 3;
     background-color: #fff;
     box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    background-color: #ffb300;
 }
 
 .line-ur::before {
@@ -213,6 +242,7 @@ td {
     z-index: 3;
     background-color: #fff;
     box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    background-color: #ffb300;
 }
 
 .line-ur::after {
@@ -226,6 +256,7 @@ td {
     z-index: 3;
     background-color: #fff;
     box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    background-color: #ffb300;
 }
 
 .line-dr::before {
@@ -239,6 +270,7 @@ td {
     z-index: 3;
     background-color: #fff;
     box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    background-color: #ffb300;
 }
 
 .line-dr::after {
@@ -252,6 +284,7 @@ td {
     z-index: 3;
     background-color: #fff;
     box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    background-color: #ffb300;
 }
 
 .line-dl::before {
@@ -265,6 +298,7 @@ td {
     z-index: 3;
     background-color: #fff;
     box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    background-color: #ffb300;
 }
 
 .line-dl::after {
@@ -278,6 +312,7 @@ td {
     z-index: 3;
     background-color: #fff;
     box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    background-color: #ffb300;
 }
 
 .line-u::before {
@@ -291,6 +326,7 @@ td {
     z-index: 3;
     background-color: #fff;
     box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    background-color: #ffb300;
 }
 
 .line-d::before {
@@ -304,6 +340,7 @@ td {
     z-index: 3;
     background-color: #fff;
     box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    background-color: #ffb300;
 }
 
 .line-r::before {
@@ -317,6 +354,7 @@ td {
     z-index: 3;
     background-color: #fff;
     box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    background-color: #ffb300;
 }
 
 .line-l::before {
@@ -330,6 +368,7 @@ td {
     z-index: 3;
     background-color: #fff;
     box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    background-color: #ffb300;
 }
 
 .exchange {
@@ -337,9 +376,10 @@ td {
 }
 
 .timer__score {
-    color: #f5e616;
+    color: #ffffff;
     margin-left: 10px;
     letter-spacing: 2px;
+    text-shadow: 0 0px 10px #03bcf4, 0 0 10px #03bcf4, 0 0 10px #03bcf4, 0 0 10px #03bcf4, 0 0 160px #03bcf4;
 }
 
 .exchange__img {}
