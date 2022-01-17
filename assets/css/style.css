@@ -25,7 +25,7 @@ body {
     background-repeat: no-repeat;
     background-image: url(../img/background-2.png);
     background-size: cover;
-    border: 2px solid #fff;
+    border: 3px solid var(--primary-color);
     display: flex;
     border-radius: 10px;
     position: relative;
@@ -86,27 +86,32 @@ td {
 }
 
 #board {
-    /* margin-top: -20px; */
+    display: flex;
+    flex: 1;
+}
+
+table {
+    margin: auto;
 }
 
 .side-bar {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 1;
+    width: 20%;
     justify-content: center;
 }
 
 .logo {
     position: absolute;
     margin: 8px;
-    top: -41px;
-    left: -50px;
-    transform: rotate( 339deg);
+    top: 0px;
+    left: 30px;
+    /* transform: rotate( 339deg); */
 }
 
 .logo__img {
-    width: 180px;
+    width: 100px;
 }
 
 .option div:hover img {
@@ -120,6 +125,7 @@ td {
 }
 
 .option__item {
+    position: relative;
     width: 60px;
     height: 60px;
     cursor: pointer;
@@ -161,10 +167,32 @@ svg g path {
 .center {
     display: flex;
     flex-direction: column;
+    margin-top: 30px;
+    width: 80%;
 }
 
 .top {
     margin-top: 20px;
+    display: flex;
+    align-items: center;
+    margin: 0 40px;
+}
+
+.score {
+    display: flex;
+    justify-content: center;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    text-shadow: 1px 1px 4px #000;
+    letter-spacing: 1px;
+}
+
+.score__title {
+    font-family: 'lazer84';
+}
+
+#score__value {
+    font-family: 'lazer84';
 }
 
 .level__title {
@@ -183,21 +211,20 @@ svg g path {
 }
 
 .timer__bar {
-    /* rgb(148,213,163) */
     height: 22px;
-    /* background: linear-gradient(to right, red, yellow, rgb(9, 172, 9));
-     */
-    background: linear-gradient(to right, rgb(255, 119, 119), yellow, rgb(148, 213, 163));
-    border: 2px solid rgb(255, 255, 255);
+    width: 80%;
+    background: var(--primary-color);
+    border: 3px solid #fff;
     border-radius: 25px;
     flex: 1;
 }
 
 .timer {
-    margin: 10px 40px 0 40px;
+    flex: 1;
     display: flex;
     align-items: center;
     position: relative;
+    margin: 0 40px;
 }
 
 .timer__icon-wrapper {

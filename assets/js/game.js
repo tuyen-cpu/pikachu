@@ -16,6 +16,7 @@ class Game {
             this.typeOfPikachu = 15 // type number of pika chu init is 7
             this.rowMax = ROW + 2 //the actual number of rows of the matrix including the border (border value is 0)
             this.colMax = COL + 2 //the actual number of columns of the matrix including the border (border value is 0)
+            this.board = document.getElementById('board')
             this.mainArray = this.borderEmptyArray(this.shuffledArr(this.randomTwinArray()));
             // this.mainArray = [
             //     [0, 0, 0, 0, 0, 0],
@@ -29,12 +30,12 @@ class Game {
             this.music = new Music(srcSelect)
             this.handleOption()
 
+
         }
         /* Create elements cell + load image based on matrix */
     createBoardPikachu(array) {
         const table = document.createElement("table");
-        const board = document.getElementById("board");
-        board.appendChild(table);
+        this.board.appendChild(table);
         for (let i = 0; i < this.rowMax; i++) {
             const tr = document.createElement("tr");
             table.appendChild(tr);
@@ -45,8 +46,9 @@ class Game {
         }
 
     }
-    clearBoardPikachu() {
-            document.getElementById("board").innerHTML = '';
+
+    clearBoard() {
+            this.board.innerHTML = '';
         }
         // Generate pairs of numbers
     randomTwinArray() {
@@ -555,29 +557,32 @@ class Game {
         }
         //hidden cell
     removeCell(index) {
+            console.log(this.mainArray)
             this.cells[index].innerHTML = "";
+            console.log(this.cells[index])
         }
         //get index of cell base x y from main array
     getIndexOfCell(x, y) {
         return x * this.colMax + y;
     }
     hint() {
-        if (this.numberHint > 0) {
-            A: for (var i = 0; i < this.rowMax; i++) {
-                for (var j = 0; j < this.colMax; j++) {
-                    if (this.mainArray[i][j] != 0) {
-                        for (var k = 0; k < this.rowMax; k++) {
-                            for (var h = 0; h < this.colMax; h++) {
-                                if (this.mainArray[k][h] != 0) {
-                                    if ((i != k || j != h) && this.mainArray[i][j] == this.mainArray[k][h]) {
-                                        if (this.isConnect([i, j], [k, h])) {
-                                            console.log([i, j], [k, h])
-                                            this.borderHintCell(this.cells[this.getIndexOfCell(i, j)])
-                                            this.borderHintCell(this.cells[this.getIndexOfCell(k, h)])
-                                            this.pathArray = []
-                                            break A;
-                                        } else {
-                                            console.log([i, j], [k, h], 'miss')
+            if (this.numberHint > 0) {
+                A: for (var i = 0; i < this.rowMax; i++) {
+                    for (var j = 0; j < this.colMax; j++) {
+                        if (this.mainArray[i][j] != 0) {
+                            for (var k = 0; k < this.rowMax; k++) {
+                                for (var h = 0; h < this.colMax; h++) {
+                                    if (this.mainArray[k][h] != 0) {
+                                        if ((i != k || j != h) && this.mainArray[i][j] == this.mainArray[k][h]) {
+                                            if (this.isConnect([i, j], [k, h])) {
+                                                console.log([i, j], [k, h])
+                                                this.borderHintCell(this.cells[this.getIndexOfCell(i, j)])
+                                                this.borderHintCell(this.cells[this.getIndexOfCell(k, h)])
+                                                this.pathArray = []
+                                                break A;
+                                            } else {
+                                                console.log([i, j], [k, h], 'miss')
+                                            }
                                         }
                                     }
                                 }
@@ -586,14 +591,33 @@ class Game {
                     }
                 }
             }
+            else {
+                alert("Đã hết lượt sử dụng gợi ý!");
+            }
         }
-        else {
-            alert("Đã hết lượt sử dụng gợi ý!");
+        //random mainArray
+    convert() {
+        let arr = [];
+        for (let i = 0; i < this.rowMax; i++) {
+            for (let j = 0; j < this.colMax; j++) {
+                if (this.mainArray[i][j] != 0) arr.push(this.mainArray[i][j])
+            }
         }
+        arr = arr.sort(() => Math.random() - 0.5)
+        for (let i = 0; i < this.rowMax; i++) {
+            for (let j = 0; j < this.colMax; j++) {
+                if (this.mainArray[i][j] != 0) this.mainArray[i][j] = arr.shift();
+            }
+        }
+        this.clearBoard()
+        this.createBoardPikachu(this.mainArray)
+        this.cells = document.querySelectorAll(".pikachu")
     }
     handleOption() {
-        const hint = document.getElementById('hint')
-        hint.onclick = () => { this.hint() }
+        const hintBtn = document.getElementById('hint')
+        hintBtn.onclick = () => { this.hint() }
+        const exchangeBtn = document.getElementById('exchange')
+        exchangeBtn.onclick = () => { this.convert() }
     }
 }
 const g = new Game();
