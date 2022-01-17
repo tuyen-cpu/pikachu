@@ -9,12 +9,13 @@ class Game {
                 [null, null],
                 [null, null]
             ];
+            this.numberHint = 3
             this.caseAlgorithm = null
             this.directList = []
             this.pathArray = []; // Array contain path when connect 2 cell
-            this.typeOfPikachu = 2; // type number of pika chu init is 7
-            this.rowMax = ROW + 2; //the actual number of rows of the matrix including the border (border value is 0)
-            this.colMax = COL + 2; //the actual number of columns of the matrix including the border (border value is 0)
+            this.typeOfPikachu = 15 // type number of pika chu init is 7
+            this.rowMax = ROW + 2 //the actual number of rows of the matrix including the border (border value is 0)
+            this.colMax = COL + 2 //the actual number of columns of the matrix including the border (border value is 0)
             this.mainArray = this.borderEmptyArray(this.shuffledArr(this.randomTwinArray()));
             // this.mainArray = [
             //     [0, 0, 0, 0, 0, 0],
@@ -24,7 +25,9 @@ class Game {
             //     [0, 0, 0, 0, 0, 0]
             // ]
             this.createBoardPikachu(this.mainArray);
+            this.cells = document.querySelectorAll(".pikachu")
             this.music = new Music(srcSelect)
+            this.handleOption()
 
         }
         /* Create elements cell + load image based on matrix */
@@ -277,7 +280,6 @@ class Game {
         @return: directList: list direction line example: ['ul','ur','dl',...] 
         */
     findDirect() {
-        const pikachu = document.querySelectorAll(".pikachu")
         let zigzag = 1;
         let direct = 'null'
         for (let i = 0; i < this.pathArray.length; i++) {
@@ -503,11 +505,11 @@ class Game {
             }
 
         }
-        this.drawPath(this.directList, pikachu)
+        this.drawPath(this.directList, this.cells)
         this.directList = []
         setTimeout(() => {
-            for (let i = 0; i < pikachu.length; i++) {
-                this.removeClassStartsWith(pikachu[i], 'line-');
+            for (let i = 0; i < this.cells.length; i++) {
+                this.removeClassStartsWith(this.cells[i], 'line-');
             }
         }, 500)
 
@@ -531,35 +533,68 @@ class Game {
         }
         //Border cell 
     borderCell(cell) {
-        cell.isSelected = true;
-        cell.childNodes[0].classList.add("hover")
-    }
-
-    // remove border cell 
+            cell.isSelected = true;
+            cell.childNodes[0].classList.add("hover")
+        }
+        //Border cell hint
+    borderHintCell(cell) {
+            cell.childNodes[0].classList.add("hint")
+        }
+        // remove border cell 
     clearBorderCell(index) {
-            const pikachu = document.querySelectorAll(".pikachu");
+        this.cells[index].isSelected = false;
+        this.cells[index].childNodes[0].classList.remove("hover")
+    }
+    clearBorderAllCells() {
             for (var i = 0; i < this.rowMax; i++) {
                 for (var j = 0; j < this.colMax; j++) {
-                    pikachu[index].isSelected = false;
-                    pikachu[index].childNodes[0].classList.remove("hover")
+                    this.cells[this.getIndexOfCell(i, j)].isSelected = false;
+                    this.cells[this.getIndexOfCell(i, j)].childNodes[0].classList.remove("hover")
                 }
             }
         }
         //hidden cell
     removeCell(index) {
-            const pikachu = document.querySelectorAll(".pikachu");
-            pikachu[index].innerHTML = "";
+            this.cells[index].innerHTML = "";
         }
         //get index of cell base x y from main array
     getIndexOfCell(x, y) {
-            return x * this.colMax + y;
+        return x * this.colMax + y;
+    }
+    hint() {
+        if (this.numberHint > 0) {
+            A: for (var i = 0; i < this.rowMax; i++) {
+                for (var j = 0; j < this.colMax; j++) {
+                    if (this.mainArray[i][j] != 0) {
+                        for (var k = 0; k < this.rowMax; k++) {
+                            for (var h = 0; h < this.colMax; h++) {
+                                if (this.mainArray[k][h] != 0) {
+                                    if ((i != k || j != h) && this.mainArray[i][j] == this.mainArray[k][h]) {
+                                        if (this.isConnect([i, j], [k, h])) {
+                                            console.log([i, j], [k, h])
+                                            this.borderHintCell(this.cells[this.getIndexOfCell(i, j)])
+                                            this.borderHintCell(this.cells[this.getIndexOfCell(k, h)])
+                                            this.pathArray = []
+                                            break A;
+                                        } else {
+                                            console.log([i, j], [k, h], 'miss')
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-        // assignClickCell() {
-        //     const pikachus = document.querySelectorAll(".pikachu")
-        //     pikachus.forEach(element => {
-        //         console.log(element.getAttribute('x'))
-        //     })
-        // }
+        else {
+            alert("Đã hết lượt sử dụng gợi ý!");
+        }
+    }
+    handleOption() {
+        const hint = document.getElementById('hint')
+        hint.onclick = () => { this.hint() }
+    }
 }
 const g = new Game();
 

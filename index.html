@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./assets/js/lottie-player.js"></script>
+    <script src="./assets/js/lottie-interactivity.min.js"></script>
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="shortcut icon" href="#">
     <style>
@@ -15,31 +17,34 @@
             src: local('lazer84'), url('./assets/css/Lazer84.woff') format('woff');
         }
     </style>
+
     <title>Pikachu</title>
 </head>
 
 <body>
     <div class="app">
         <div class="logo">
-            <img src="./assets/img/hhh.png" alt="" class="logo__img">
+            <img src="./assets/img/logo-pikachu.png" alt="" class="logo__img">
         </div>
         <div class="side-bar">
             <div class="level">
                 <h2 class="level__title">Level <span class="level__value">11</span></h2>
             </div>
             <div class="option">
-                <div class="option__item sound">
-                    <lottie-player src="./assets/json/volume.json" background="transparent" speed="1" style="width: auto; height: auto;"></lottie-player>
+                <div class="option__item" id="sound">
+                    <lottie-player id="volumeIcon" src="./assets/json/volume.json" style="width:auto; height: auto;">"></lottie-player>
                 </div>
-                <div class="option__item exchange">
-                    <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_chkytin8.json" background="transparent" speed="1" style="width: auto; height: auto;" loop autoplay></lottie-player><span>3</span>
+                <div class="option__item" id="exchange">
+                    <lottie-player id="exchangeIcon" src="./assets/json/exchange.json" background="transparent" speed="1" style="width: auto; height: auto;" loop autoplay></lottie-player>
+                    <span class="option__value">3</span>
                 </div>
-                <div class="option__item help">
-                    <!-- <lottie-player src="./assets/json/search.json" background="transparent" speed="1" style="width: auto; height: auto;" loop autoplay></lottie-player><span>3</span> -->
-                    <lottie-player src="./assets/json/search.json" background="transparent" background="transparent" speed="1" style="width: 60px; height: 60px;" loop autoplay></lottie-player>
+                <div class="option__item" id="hint">
+                    <!-- <lottie-player src="./assets/json/search.json" background="transparent" speed="1" style="width: auto; height: auto;" loop autoplay></lottie-player> -->
+                    <lottie-player id="searchIcon" src="./assets/json/search.json" background="transparent" background="transparent" speed="1" style="width: auto; height: auto;"></lottie-player>
+                    <span class="option__value">3</span>
                 </div>
                 <div class="option__item reset">
-                    <img src="./assets/img/btn-reset.png" alt="" class="reset__img">
+                    <span>Reset</span>
                 </div>
             </div>
         </div>
@@ -50,7 +55,6 @@
                         <lottie-player class="timer__icon" src="./assets/json/time.json" background="transparent" speed="1" loop autoplay></lottie-player>
                     </div>
                     <div class="timer__bar"></div>
-
                     <!-- <div class="timer__score">SCORE: <span id="score">20</span></div> -->
                 </div>
 
@@ -65,7 +69,57 @@
     </div>
 
     <script type="module" src="./assets/js/game.js"></script>
-    <script src="./assets/js/lottie-player.js"></script>
+    <script>
+        LottieInteractivity.create({
+            player: '#volumeIcon',
+            mode: "cursor",
+            actions: [{
+                type: "toggle"
+            }]
+        });
+        // LottieInteractivity.create({
+        //     player: '#searchIcon',
+        //     mode: "cursor",
+        //     actions: [{
+        //         type: "hover",
+        //         forceFlag: false
+        //     }]
+        // });
+
+        LottieInteractivity.create({
+            mode: "cursor",
+            player: "#searchIcon",
+            actions: [{
+                position: {
+                    x: [-10, 100],
+                    y: [-10, 100]
+                },
+                type: "loop",
+                frames: [215.5, 431]
+            }, {
+                position: {
+                    x: -1,
+                    y: -1
+                },
+                type: 'stop',
+                frames: [215.5],
+            }]
+        });
+        LottieInteractivity.create({
+            mode: "cursor",
+            player: "#searchIcon",
+            actions: [{
+                position: {
+                    x: [0, 1],
+                    y: [0, 1]
+                },
+                type: "seek",
+                frames: [215.5, 431]
+            }]
+        });
+    </script>
+
+    </script>
 
 </body>
 

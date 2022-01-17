@@ -4,6 +4,10 @@
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
+:root {
+    --primary-color: #ffa200;
+}
+
 img {
     vertical-align: middle;
 }
@@ -15,7 +19,7 @@ body {
 }
 
 .app {
-    margin: 30px auto auto auto;
+    margin: 60px auto auto auto;
     width: 900px;
     height: 600px;
     background-repeat: no-repeat;
@@ -41,13 +45,27 @@ body {
     background: red;
 }
 
+body:hover {
+    cursor: url("../img/pointer.png"), url("../img/pointer.png"), default;
+}
+
 table {
     border-spacing: 0;
 }
 
-.pikachu:hover {
+.pikachu:hover img {
     opacity: 0.6;
-    cursor: url("../img/pointer.png"), url("../img/pointer.png"), default;
+}
+
+.hint {
+    --weight: 1px;
+    top: calc(0px - var(--weight));
+    left: calc(0px - var(--weight));
+    position: absolute;
+    border: var(--weight) solid #fff;
+    box-shadow: 0 0px 7px #000, 0 0 7px #FF3131, 0 0 7px #FF3131, 0 0 7px #000, 0 0 7px #FF3131;
+    /* box-shadow: 0 0 1px #000, 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color); */
+    z-index: 2;
 }
 
 .hover {
@@ -56,8 +74,8 @@ table {
     left: calc(0px - var(--weight));
     position: absolute;
     border: var(--weight) solid #fff;
-    box-shadow: 0 0px 7px #b3ff51, 0 0 7px #FF3131, 0 0 7px #FF3131, 0 0 7px #b3ff51, 0 0 7px #FF3131;
-    /* box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51; */
+    box-shadow: 0 0px 7px var(--primary-color), 0 0 7px #FF3131, 0 0 7px #FF3131, 0 0 7px var(--primary-color), 0 0 7px #FF3131;
+    /* box-shadow: 0 0 1px var(--primary-color), 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color); */
     z-index: 2;
 }
 
@@ -91,10 +109,6 @@ td {
     width: 180px;
 }
 
-.option div {
-    margin: 20px 0;
-}
-
 .option div:hover img {
     transform: scale(105%);
     cursor: url("../img/pointer.png"), url("../img/pointer.png"), default;
@@ -109,13 +123,39 @@ td {
     width: 60px;
     height: 60px;
     cursor: pointer;
+    margin-top: 20px;
 }
 
-.option__item span {
-    color: red;
+.reset {
+    margin-top: 60px;
+}
+
+svg g path {
+    fill: yellow;
+    stroke: red;
+}
+
+.option__value {
+    color: var(--primary-color);
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    font-size: 1rem;
+    font-family: 'lazer84';
     position: absolute;
     top: 80%;
     right: 2px;
+}
+
+.reset span {
+    font-family: 'lazer84';
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    transition: all 0.1s linear;
+}
+
+.reset span:hover {
+    font-size: 2rem;
 }
 
 .center {
@@ -131,8 +171,8 @@ td {
     margin-top: 50px;
     font-family: 'lazer84';
     letter-spacing: 0.5px;
-    font-size: 1.5rem;
-    color: #ffc400;
+    font-size: 1.7rem;
+    color: var(--primary-color);
     text-shadow: 1px 1px 4px #000;
     /* text-shadow: 0 0px 10px #03bcf4, 0 0 20px #03bcf4, 0 0 40px #03bcf4, 0 0 80px #03bcf4, 0 0 160px #03bcf4; */
 }
@@ -185,7 +225,7 @@ td {
     height: 100%;
     z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    box-shadow: 0 0 1px var(--primary-color), 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color);
     background-color: #ffb300;
 }
 
@@ -199,7 +239,7 @@ td {
     left: 0;
     z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    box-shadow: 0 0 1px var(--primary-color), 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color);
     background-color: #ffb300;
 }
 
@@ -213,7 +253,7 @@ td {
     left: 0;
     z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    box-shadow: 0 0 1px var(--primary-color), 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color);
     background-color: #ffb300;
 }
 
@@ -227,7 +267,7 @@ td {
     height: 52%;
     z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    box-shadow: 0 0 1px var(--primary-color), 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color);
     background-color: #ffb300;
 }
 
@@ -241,7 +281,7 @@ td {
     right: 0;
     z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    box-shadow: 0 0 1px var(--primary-color), 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color);
     background-color: #ffb300;
 }
 
@@ -255,7 +295,7 @@ td {
     height: 52%;
     z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    box-shadow: 0 0 1px var(--primary-color), 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color);
     background-color: #ffb300;
 }
 
@@ -269,7 +309,7 @@ td {
     right: 0;
     z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    box-shadow: 0 0 1px var(--primary-color), 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color);
     background-color: #ffb300;
 }
 
@@ -283,7 +323,7 @@ td {
     height: 52%;
     z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    box-shadow: 0 0 1px var(--primary-color), 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color);
     background-color: #ffb300;
 }
 
@@ -297,7 +337,7 @@ td {
     left: 0;
     z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    box-shadow: 0 0 1px var(--primary-color), 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color);
     background-color: #ffb300;
 }
 
@@ -311,7 +351,7 @@ td {
     height: 52%;
     z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    box-shadow: 0 0 1px var(--primary-color), 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color);
     background-color: #ffb300;
 }
 
@@ -325,7 +365,7 @@ td {
     height: 52%;
     z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    box-shadow: 0 0 1px var(--primary-color), 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color);
     background-color: #ffb300;
 }
 
@@ -339,7 +379,7 @@ td {
     height: 52%;
     z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    box-shadow: 0 0 1px var(--primary-color), 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color);
     background-color: #ffb300;
 }
 
@@ -353,7 +393,7 @@ td {
     right: 0;
     z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    box-shadow: 0 0 1px var(--primary-color), 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color);
     background-color: #ffb300;
 }
 
@@ -367,7 +407,7 @@ td {
     left: 0;
     z-index: 3;
     background-color: #fff;
-    box-shadow: 0 0 1px #b3ff51, 0 0 2px #b3ff51, 0 0 6px #b3ff51, 0 0 12px #b3ff51, inset 0 0 1px #b3ff51, inset 0 0 2px #b3ff51, inset 0 0 6px #b3ff51, inset 0 0 12px #b3ff51;
+    box-shadow: 0 0 1px var(--primary-color), 0 0 2px var(--primary-color), 0 0 6px var(--primary-color), 0 0 12px var(--primary-color), inset 0 0 1px var(--primary-color), inset 0 0 2px var(--primary-color), inset 0 0 6px var(--primary-color), inset 0 0 12px var(--primary-color);
     background-color: #ffb300;
 }
 
