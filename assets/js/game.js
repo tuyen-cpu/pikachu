@@ -10,7 +10,6 @@ class Game {
                 [null, null],
                 [null, null]
             ];
-
             this.numberHint = 3 //allowed number of times click hint button
             this.numberRandom = 3 //allowed number of times click random button
             this.caseAlgorithm = null //6 case
@@ -27,7 +26,9 @@ class Game {
             this.musicBackground = new Music(srcSoundBackground1) //create background muscic
             this.isPlayBackgroundSound = false
             this.musicBtn = document.getElementById('sound');
-            //add icon volume to button on off music
+            this.randomValue = document.getElementById('random-value')
+            this.hintValue = document.getElementById('hint-value')
+                //add icon volume to button on off music
             this.loadIconMusic()
             this.handleOption() //handle click option: sound, search, random, reset
         }
@@ -598,6 +599,8 @@ class Game {
                                                 this.borderHintCell(this.cells[this.getIndexOfCell(i, j)])
                                                 this.borderHintCell(this.cells[this.getIndexOfCell(k, h)])
                                                 this.pathArray = []
+                                                this.numberHint--;
+                                                this.hintValue.innerHTML = this.numberHint
                                                 break A;
                                             } else {
                                                 console.log([i, j], [k, h], 'miss')
@@ -616,37 +619,52 @@ class Game {
         }
         //random mainArray
     randomCells() {
-            let arr = [];
-            for (let i = 0; i < this.rowMax; i++) {
-                for (let j = 0; j < this.colMax; j++) {
-                    if (this.mainArray[i][j] != 0) arr.push(this.mainArray[i][j])
+            if (this.numberRandom > 0) {
+                let arr = [];
+                for (let i = 0; i < this.rowMax; i++) {
+                    for (let j = 0; j < this.colMax; j++) {
+                        if (this.mainArray[i][j] != 0) arr.push(this.mainArray[i][j])
+                    }
                 }
-            }
-            arr = arr.sort(() => Math.random() - 0.5)
-            for (let i = 0; i < this.rowMax; i++) {
-                for (let j = 0; j < this.colMax; j++) {
-                    if (this.mainArray[i][j] != 0) this.mainArray[i][j] = arr.shift();
+                arr = arr.sort(() => Math.random() - 0.5)
+                for (let i = 0; i < this.rowMax; i++) {
+                    for (let j = 0; j < this.colMax; j++) {
+                        if (this.mainArray[i][j] != 0) this.mainArray[i][j] = arr.shift();
+                    }
                 }
+                this.numberRandom--;
+                this.randomValue.innerHTML = this.numberRandom
+                this.clearBoard()
+                this.createBoardPikachu(this.mainArray)
+                this.cells = document.querySelectorAll(".pikachu")
+            } else {
+                alert("Đã hết lượt sử dụng random!");
             }
-            this.clearBoard()
-            this.createBoardPikachu(this.mainArray)
-            this.cells = document.querySelectorAll(".pikachu")
+
         }
         //handle click option: volume, hint, radom, restart
     handleOption() {
+        //handle hint click
         const hintBtn = document.getElementById('hint')
         hintBtn.onclick = () => { this.hint() }
+            //handle radom click
         const exchangeBtn = document.getElementById('exchange')
         exchangeBtn.onclick = () => { this.randomCells() }
+            // handle click on off music
         this.musicBtn.onclick = () => {
-            this.isPlayBackgroundSound = !this.isPlayBackgroundSound
-            if (this.isPlayBackgroundSound) {
-                this.musicBackground.play()
-                this.iconMusic.playSegments([0, 40], true);
-            } else {
-                this.iconMusic.playSegments([40, 100], true);
-                this.musicBackground.pause();
+                this.isPlayBackgroundSound = !this.isPlayBackgroundSound
+                if (this.isPlayBackgroundSound) {
+                    this.musicBackground.play()
+                    this.iconMusic.playSegments([0, 40], true);
+                } else {
+                    this.iconMusic.playSegments([40, 100], true);
+                    this.musicBackground.pause();
+                }
             }
+            //handle reset game
+        this.resetBtn = document.getElementById('reset')
+        this.resetBtn.onclick = () => {
+
         }
     }
 }
