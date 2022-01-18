@@ -136,11 +136,6 @@ table {
     margin-top: 60px;
 }
 
-svg g path {
-    fill: yellow;
-    stroke: red;
-}
-
 .option__value {
     color: var(--primary-color);
     border-radius: 50%;

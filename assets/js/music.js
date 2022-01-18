@@ -1,8 +1,8 @@
 export default class Music {
     constructor(source) {
         this.sound = document.createElement("audio");
-        this.sound.src = source
         document.body.appendChild(this.sound);
+        this.sound.src = source
     }
     setMusic(src) {
         this.sound.src = src;
@@ -11,6 +11,6 @@ export default class Music {
         this.sound.play()
     }
     stop() {
-        this.sound.stop()
+        this.sound.pause()
     }
 }

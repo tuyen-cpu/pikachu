@@ -32,7 +32,7 @@
             </div>
             <div class="option">
                 <div class="option__item" id="sound">
-                    <lottie-player id="volumeIcon" src="./assets/json/volume.json" style="width:auto; height: auto;">"></lottie-player>
+                    <!-- <lottie-player id="volumeIcon" src="./assets/json/volume.json" style="width:auto; height: auto;"></lottie-player> -->
                 </div>
                 <div class="option__item" id="exchange">
                     <lottie-player id="exchangeIcon" src="./assets/json/exchange.json" background="transparent" speed="1" style="width: auto; height: auto;" loop autoplay></lottie-player>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="option__item" id="hint">
                     <!-- <lottie-player src="./assets/json/search.json" background="transparent" speed="1" style="width: auto; height: auto;" loop autoplay></lottie-player> -->
-                    <lottie-player id="searchIcon" src="./assets/json/search.json" background="transparent" background="transparent" speed="1" style="width: auto; height: auto;"></lottie-player>
+                    <lottie-player id="searchIcon" src="./assets/json/search.json" background="transparent" background="transparent" speed="1" style="width: auto; height: auto;" loop autoplay></lottie-player>
                     <span class="option__value">3</span>
                 </div>
                 <div class="option__item reset">
@@ -72,58 +72,9 @@
 
     </div>
 
-    <script type="module" src="./assets/js/game.js"></script>
-    <script>
-        LottieInteractivity.create({
-            player: '#volumeIcon',
-            mode: "cursor",
-            actions: [{
-                type: "toggle"
-            }]
-        });
-        // LottieInteractivity.create({
-        //     player: '#searchIcon',
-        //     mode: "cursor",
-        //     actions: [{
-        //         type: "hover",
-        //         forceFlag: false
-        //     }]
-        // });
+    <script type="module" src="./assets/js/game.js" defer></script>
 
-        LottieInteractivity.create({
-            mode: "cursor",
-            player: "#searchIcon",
-            actions: [{
-                position: {
-                    x: [-10, 100],
-                    y: [-10, 100]
-                },
-                type: "loop",
-                frames: [215.5, 431]
-            }, {
-                position: {
-                    x: -1,
-                    y: -1
-                },
-                type: 'stop',
-                frames: [215.5],
-            }]
-        });
-        LottieInteractivity.create({
-            mode: "cursor",
-            player: "#searchIcon",
-            actions: [{
-                position: {
-                    x: [0, 1],
-                    y: [0, 1]
-                },
-                type: "seek",
-                frames: [215.5, 431]
-            }]
-        });
-    </script>
 
-    </script>
 
 </body>
 
