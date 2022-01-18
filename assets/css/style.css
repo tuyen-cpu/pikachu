@@ -186,7 +186,8 @@
         font-family: 'lazer84';
     }
     
-    #score__value {
+    #score-value {
+        width: 50px;
         font-family: 'lazer84';
     }
     
@@ -218,7 +219,7 @@
     
     .timer__process {
         position: absolute;
-        width: 90%;
+        width: 100%;
         background: var(--primary-color);
         height: 100%;
     }
@@ -229,76 +230,11 @@
         position: absolute;
         height: 100%;
         width: 3%;
+        top: 0;
+        bottom: 0;
         left: 98%;
         border-radius: 50%;
-        animation: undulating 1.5s infinite 1.5s;
-        transform: width 1.5s linear;
-    }
-    
-    @keyframes undulating {
-        0% {
-            left: 98%;
-        }
-        5% {
-            left: 98.1%
-        }
-        10% {
-            left: 98.2%
-        }
-        15% {
-            left: 98.3%
-        }
-        20% {
-            left: 98.4%
-        }
-        25% {
-            left: 98.5%
-        }
-        30% {
-            left: 98.6%
-        }
-        25% {
-            left: 98.7%
-        }
-        40% {
-            left: 98.8%
-        }
-        45% {
-            left: 98.9%
-        }
-        50% {
-            left: 99%
-        }
-        55% {
-            left: 98.9%
-        }
-        60% {
-            left: 98.8%
-        }
-        65% {
-            left: 98.7%
-        }
-        70% {
-            left: 98.6%
-        }
-        75% {
-            left: 98.5%
-        }
-        80% {
-            left: 98.4%
-        }
-        85% {
-            left: 98.3%
-        }
-        90% {
-            left: 98.2%
-        }
-        95% {
-            left: 98.1%
-        }
-        100% {
-            left: 98%;
-        }
+        transform: width 1s linear;
     }
     
     .timer {
@@ -306,7 +242,7 @@
         display: flex;
         align-items: center;
         position: relative;
-        margin: 0 40px;
+        margin: 0 40px 0 0;
     }
     
     .timer__icon-wrapper {

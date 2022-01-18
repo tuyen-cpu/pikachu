@@ -2,35 +2,50 @@ import Music from "./music.js"
 import Pikachu from "./pikachu.js"
 import { srcSelect, srcConnect, srcMiss, srcSoundBackground1 } from './variables.js';
 
-var COL = 16;
+var COL = 14;
 var ROW = 9;
 class Game {
     constructor() {
-            this.selectedArray = [
-                [null, null],
-                [null, null]
-            ];
-            this.numberHint = 3 //allowed number of times click hint button
-            this.numberRandom = 3 //allowed number of times click random button
-            this.caseAlgorithm = null //6 case
-            this.directList = [] // direction list connect 2 cells
-            this.pathArray = []; // Array contain path when connect 2 cell
-            this.typeOfPikachu = 4 // type number of pika chu init is 7
-            this.rowMax = ROW + 2 //the actual number of rows of the matrix including the border (border value is 0)
-            this.colMax = COL + 2 //the actual number of columns of the matrix including the border (border value is 0)
-            this.board = document.getElementById('board')
+        this.selectedArray = [
+            [null, null],
+            [null, null]
+        ];
+
+        this.numberHint = 3 //allowed number of times click hint button
+        this.numberRandom = 3 //allowed number of times click random button
+        this.caseAlgorithm = null //6 case
+        this.directList = [] // direction list connect 2 cells
+        this.pathArray = []; // Array contain path when connect 2 cell
+        this.typeOfPikachu = 33 // type number of pika chu init is 7
+        this.rowMax = ROW + 2 //the actual number of rows of the matrix including the border (border value is 0)
+        this.colMax = COL + 2 //the actual number of columns of the matrix including the border (border value is 0)
+        this.board = document.getElementById('board')
+        this.musicBtn = document.getElementById('sound');
+        this.randomValue = document.getElementById('random-value')
+        this.hintValue = document.getElementById('hint-value')
+        this.scoreValue = document.getElementById('score-value')
+        this.levelValue = document.getElementById('level-value')
+        this.init()
+        this.music = new Music(srcSelect)
+        this.musicBackground = new Music(srcSoundBackground1) //create background muscic
+        this.isPlayBackgroundSound = false
+            //add icon volume to button on off music
+        this.loadIconMusic()
+        this.handleOption() //handle click option: sound, search, random, reset
+    }
+    init() {
+            this.totalPikachu = COL * ROW
+            console.log(this.totalPikachu)
+            this.time = 300
+            this.level = 1
+            this.levelValue.innerHTML = this.level
+            this.clearBoard()
             this.mainArray = this.borderEmptyArray(this.shuffledArr(this.randomTwinArray()));
             this.createBoardPikachu(this.mainArray);
             this.cells = document.querySelectorAll(".pikachu")
-            this.music = new Music(srcSelect)
-            this.musicBackground = new Music(srcSoundBackground1) //create background muscic
-            this.isPlayBackgroundSound = false
-            this.musicBtn = document.getElementById('sound');
-            this.randomValue = document.getElementById('random-value')
-            this.hintValue = document.getElementById('hint-value')
-                //add icon volume to button on off music
-            this.loadIconMusic()
-            this.handleOption() //handle click option: sound, search, random, reset
+            this.countTime()
+            this.score = 0
+            this.scoreValue.innerHTML = this.score
         }
         //load icon music and check on or off
     loadIconMusic() {
@@ -226,64 +241,75 @@ class Game {
         }
         // add cell into the top of the list and the bottom of the list
     addCellFirstAndLastIntoPathList(a, b, arr) {
-        arr.unshift(a); // first index of path 
-        arr.push(b);
-    }
+            arr.unshift(a); // first index of path 
+            arr.push(b);
+        }
+        //check 2 selected cells match ? next level when the pikachu =0
     check(cell, x, y) {
-            /*
-            selectedArray[a][b]: a=[0,1], b[0,1]
-            */
-            let a0 = this.selectedArray[0][0];
-            let a1 = this.selectedArray[0][1];
-            if (!a0 && this.mainArray[x][y]) {
-                // when you haven't select any cell
-                this.selectedArray[0] = [x, y];
-                a0 = this.selectedArray[0][0];
-                a1 = this.selectedArray[0][1];
-                this.music.setMusic(srcSelect)
-                this.music.play()
-                this.borderCell(cell)
-            } else if (a0 && this.mainArray[x][y]) {
-                //when you select cell 2
-                this.selectedArray[1] = [x, y]
-                let b0 = this.selectedArray[1][0]
-                let b1 = this.selectedArray[1][1]
-                this.clearBorderCell(this.getIndexOfCell(a0, a1))
-                this.clearBorderCell(this.getIndexOfCell(b0, b1))
-                if (this.mainArray[b0][b1]) {
-                    // cell != number 0
-                    if (JSON.stringify(this.selectedArray[0]) === JSON.stringify(this.selectedArray[1])) {
-                        // 2 selected cells is same
-                        this.resetSelectedArray()
-                        return;
-                    } else {
-                        this.clearBorderCell(this.getIndexOfCell(a0, a1))
-                        this.clearBorderCell(this.getIndexOfCell(b0, b1))
-                        if (this.mainArray[a0][a1] == this.mainArray[b0][b1]) {
-                            // 2 selected cells have the same value
-                            if (this.isConnect(this.selectedArray[0], this.selectedArray[1])) {
-                                this.music.setMusic(srcConnect)
-                                this.music.play()
-                                this.mainArray[a0][a1] = 0
-                                this.mainArray[b0][b1] = 0
-                                this.removeCell(this.getIndexOfCell(a0, a1))
-                                this.removeCell(this.getIndexOfCell(b0, b1))
-                                this.findDirect()
-                            } else {
-                                this.pathArray = []
-                                this.music.setMusic(srcMiss)
-                                this.music.play()
+        /*
+        selectedArray[a][b]: a=[0,1], b[0,1]
+        */
+        let a0 = this.selectedArray[0][0];
+        let a1 = this.selectedArray[0][1];
+        if (!a0 && this.mainArray[x][y]) {
+            // when you haven't select any cell
+            this.selectedArray[0] = [x, y];
+            a0 = this.selectedArray[0][0];
+            a1 = this.selectedArray[0][1];
+            this.music.setMusic(srcSelect)
+            this.music.play()
+            this.borderCell(cell)
+        } else if (a0 && this.mainArray[x][y]) {
+            //when you select cell 2
+            this.selectedArray[1] = [x, y]
+            let b0 = this.selectedArray[1][0]
+            let b1 = this.selectedArray[1][1]
+            this.clearBorderCell(this.getIndexOfCell(a0, a1))
+            this.clearBorderCell(this.getIndexOfCell(b0, b1))
+            if (this.mainArray[b0][b1]) {
+                // cell != number 0
+                if (JSON.stringify(this.selectedArray[0]) === JSON.stringify(this.selectedArray[1])) {
+                    // 2 selected cells is same
+                    this.resetSelectedArray()
+                    return;
+                } else {
+                    this.clearBorderCell(this.getIndexOfCell(a0, a1))
+                    this.clearBorderCell(this.getIndexOfCell(b0, b1))
+                    if (this.mainArray[a0][a1] == this.mainArray[b0][b1]) {
+                        // 2 selected cells have the same value
+                        if (this.isConnect(this.selectedArray[0], this.selectedArray[1])) {
+                            this.music.setMusic(srcConnect)
+                            this.music.play()
+                            this.mainArray[a0][a1] = 0
+                            this.mainArray[b0][b1] = 0
+                            this.removeCell(this.getIndexOfCell(a0, a1))
+                            this.removeCell(this.getIndexOfCell(b0, b1))
+                            this.findDirect()
+                            this.updateScore()
+                            this.totalPikachu = this.totalPikachu - 2
+                            if (this.totalPikachu == 0) {
+                                this.nextLevel()
                             }
                         } else {
                             this.pathArray = []
                             this.music.setMusic(srcMiss)
                             this.music.play()
                         }
-                        this.resetSelectedArray()
+                    } else {
+                        this.pathArray = []
+                        this.music.setMusic(srcMiss)
+                        this.music.play()
                     }
-                    this.pathArray = [];
+                    this.resetSelectedArray()
                 }
+                this.pathArray = [];
             }
+        }
+    }
+
+    updateScore() {
+            this.score = this.score + 10
+            this.scoreValue.innerHTML = this.score
         }
         /*find direction based on list pathArray 
             + ud: up-down
@@ -664,8 +690,39 @@ class Game {
             //handle reset game
         this.resetBtn = document.getElementById('reset')
         this.resetBtn.onclick = () => {
-
+            this.reset()
         }
+    }
+    countTime() {
+        this.timeValue = document.getElementById('value-time')
+        this.timeValue.style.width = '100%'
+        let unit = this.timeValue.offsetWidth / this.time
+        const countTime = setInterval(() => {
+            this.time--;
+            // this.timeValue.innerHTML = this.time
+            this.timeValue.style.width = this.timeValue.offsetWidth - unit + 'px'
+            if (this.time == 0) {
+                alert('Time out!')
+                clearInterval(countTime)
+                this.reset()
+            }
+        }, 1000)
+
+    }
+    updateLevel() {
+        this.level++
+            this.levelValue.innerHTML = this.level
+    }
+    nextLevel() {
+
+        this.updateLevel()
+    }
+
+    reset() {
+        this.level = 1
+        this.time = 300
+        this.init()
+
     }
 }
 
