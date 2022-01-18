@@ -6,64 +6,62 @@ var COL = 16;
 var ROW = 9;
 class Game {
     constructor() {
-        this.selectedArray = [
-            [null, null],
-            [null, null]
-        ];
+            this.selectedArray = [
+                [null, null],
+                [null, null]
+            ];
 
-        this.numberHint = 3 //allowed number of times click hint button
-        this.numberRandom = 3 //allowed number of times click random button
-        this.caseAlgorithm = null //6 case
-        this.directList = [] // direction list connect 2 cells
-        this.pathArray = []; // Array contain path when connect 2 cell
-        this.typeOfPikachu = 4 // type number of pika chu init is 7
-        this.rowMax = ROW + 2 //the actual number of rows of the matrix including the border (border value is 0)
-        this.colMax = COL + 2 //the actual number of columns of the matrix including the border (border value is 0)
-        this.board = document.getElementById('board')
-        this.mainArray = this.borderEmptyArray(this.shuffledArr(this.randomTwinArray()));
-        this.createBoardPikachu(this.mainArray);
-        this.cells = document.querySelectorAll(".pikachu")
-        this.music = new Music(srcSelect)
-        this.musicBackground = new Music(srcSoundBackground1) //create background muscic
-        this.isPlayBackgroundSound = false
-        this.buttonOffOnMusic = document.getElementById('sound');
-        //add icon volume to button on off music
-        this.buttonOffOnMusicLottie = window.bodymovin.loadAnimation({
-            container: this.buttonOffOnMusic, // the dom element that will contain the animation
-            renderer: 'svg',
-            loop: false,
-            autoplay: false,
-            path: './assets/json/volume.json' // the path to the animation json
-        });
-        if (this.isPlayBackgroundSound) {
-            this.buttonOffOnMusicLottie.goToAndStop(40, true);
-        } else {
-            this.buttonOffOnMusicLottie.goToAndStop(0, true);
+            this.numberHint = 3 //allowed number of times click hint button
+            this.numberRandom = 3 //allowed number of times click random button
+            this.caseAlgorithm = null //6 case
+            this.directList = [] // direction list connect 2 cells
+            this.pathArray = []; // Array contain path when connect 2 cell
+            this.typeOfPikachu = 4 // type number of pika chu init is 7
+            this.rowMax = ROW + 2 //the actual number of rows of the matrix including the border (border value is 0)
+            this.colMax = COL + 2 //the actual number of columns of the matrix including the border (border value is 0)
+            this.board = document.getElementById('board')
+            this.mainArray = this.borderEmptyArray(this.shuffledArr(this.randomTwinArray()));
+            this.createBoardPikachu(this.mainArray);
+            this.cells = document.querySelectorAll(".pikachu")
+            this.music = new Music(srcSelect)
+            this.musicBackground = new Music(srcSoundBackground1) //create background muscic
+            this.isPlayBackgroundSound = false
+            this.musicBtn = document.getElementById('sound');
+            //add icon volume to button on off music
+            this.loadIconMusic()
+            this.handleOption() //handle click option: sound, search, random, reset
         }
-
-
-        this.handleOption() //handle click option: sound, search, random, reset
-
-
-
-
-    }
-
-    /* Create elements cell + load image based on matrix */
-    createBoardPikachu(array) {
-        const table = document.createElement("table");
-        this.board.appendChild(table);
-        for (let i = 0; i < this.rowMax; i++) {
-            const tr = document.createElement("tr");
-            table.appendChild(tr);
-            for (var j = 0; j < this.colMax; j++) {
-                const p = new Pikachu(this, i, j, array[i][j]);
-                tr.appendChild(p.getElement);
+        //load icon music and check on or off
+    loadIconMusic() {
+            this.iconMusic = window.bodymovin.loadAnimation({
+                container: this.musicBtn, // the dom element that will contain the animation
+                renderer: 'svg',
+                loop: false,
+                autoplay: false,
+                path: './assets/json/volume.json' // the path to the animation json
+            });
+            //this.isPlayBackgroundSound =true => icon on else off
+            if (this.isPlayBackgroundSound) {
+                this.iconMusic.goToAndStop(40, true);
+            } else {
+                this.iconMusic.goToAndStop(0, true);
             }
         }
+        /* Create elements cell + load image based on matrix */
+    createBoardPikachu(array) {
+            const table = document.createElement("table");
+            this.board.appendChild(table);
+            for (let i = 0; i < this.rowMax; i++) {
+                const tr = document.createElement("tr");
+                table.appendChild(tr);
+                for (var j = 0; j < this.colMax; j++) {
+                    const p = new Pikachu(this, i, j, array[i][j]);
+                    tr.appendChild(p.getElement);
+                }
+            }
 
-    }
-
+        }
+        // clear all child in board
     clearBoard() {
             this.board.innerHTML = '';
         }
@@ -139,92 +137,93 @@ class Game {
         }
         //Check cellA and cellB is connect ??=> true ? false
     isConnect(cellA, cellB) {
-        let arrTemp = [] //horizontal path 
-        if (cellA[0] > cellB[0]) {
-            let C = cellA;
-            cellA = cellB;
-            cellB = C;
-        }
+            let arrTemp = [] //horizontal path 
+            if (cellA[0] > cellB[0]) {
+                let C = cellA;
+                cellA = cellB;
+                cellB = C;
+            }
 
-        //case 1
-        if (this.checkVertical(cellA[0] + 1, cellA[1], cellB[0]) && this.checkHorizontal(cellB[0], cellA[1], cellB[1])) {
-            console.log("TH1")
-            this.caseAlgorithm = 1
-            this.addCellFirstAndLastIntoPathList(cellA, cellB, this.pathArray)
-            return true;
-        }
-
-        //case 2
-        for (let j = (cellA[1] - 1); j >= 0; j--) {
-
-            if (this.mainArray[cellA[0]][j]) break;
-            arrTemp.push([cellA[0], j])
-            if (this.checkVertical((cellA[0]), j, cellB[0]) && this.checkHorizontal(cellB[0], j, cellB[1])) {
-                console.log("TH2")
-                arrTemp.pop(); // delete duplicate  element
-                this.pathArray = arrTemp.concat(this.pathArray) //concat 2 array path: arrTemp is horizontal path 
-                this.caseAlgorithm = 2
+            //case 1
+            if (this.checkVertical(cellA[0] + 1, cellA[1], cellB[0]) && this.checkHorizontal(cellB[0], cellA[1], cellB[1])) {
+                console.log("TH1")
+                this.caseAlgorithm = 1
                 this.addCellFirstAndLastIntoPathList(cellA, cellB, this.pathArray)
                 return true;
             }
-        }
-        arrTemp = []
-            //case 3
-        for (let j = (cellA[1] + 1); j < this.colMax; j++) {
-            if (this.mainArray[cellA[0]][j]) break;
-            arrTemp.push([cellA[0], j])
-            if (this.checkVertical((cellA[0]), j, cellB[0]) && this.checkHorizontal(cellB[0], j, cellB[1])) {
-                console.log("TH3")
-                arrTemp.pop(); // delete duplicate  element
-                this.pathArray = arrTemp.concat(this.pathArray) //concat 2 array path: arrTemp is horizontal path 
-                this.caseAlgorithm = 3
-                this.addCellFirstAndLastIntoPathList(cellA, cellB, this.pathArray)
-                return true;
-            }
-        }
-        arrTemp = []
-        if (cellA[1] > cellB[1]) {
-            let C = cellA;
-            cellA = cellB;
-            cellB = C;
-        }
 
-        //case 4
-        if (this.checkHorizontal(cellA[0], cellA[1] + 1, cellB[1]) && this.checkVertical(cellA[0], cellB[1], cellB[0])) {
-            console.log("TH4")
-            this.caseAlgorithm = 4
-            this.addCellFirstAndLastIntoPathList(cellA, cellB, this.pathArray)
-            return true;
-        }
-        //case 5
-        for (let j = (cellA[0] - 1); j >= 0; j--) {
-            if (this.mainArray[j][cellA[1]]) break;
-            arrTemp.push([j, cellA[1]])
-            if (this.checkHorizontal(j, (cellA[1]), cellB[1]) && this.checkVertical(j, cellB[1], cellB[0])) {
-                console.log("TH5")
-                arrTemp.pop(); // delete duplicate  element
-                this.pathArray = arrTemp.concat(this.pathArray) //concat 2 array path: arrTemp is horizontal path 
-                this.caseAlgorithm = 5
+            //case 2
+            for (let j = (cellA[1] - 1); j >= 0; j--) {
+
+                if (this.mainArray[cellA[0]][j]) break;
+                arrTemp.push([cellA[0], j])
+                if (this.checkVertical((cellA[0]), j, cellB[0]) && this.checkHorizontal(cellB[0], j, cellB[1])) {
+                    console.log("TH2")
+                    arrTemp.pop(); // delete duplicate  element
+                    this.pathArray = arrTemp.concat(this.pathArray) //concat 2 array path: arrTemp is horizontal path 
+                    this.caseAlgorithm = 2
+                    this.addCellFirstAndLastIntoPathList(cellA, cellB, this.pathArray)
+                    return true;
+                }
+            }
+            arrTemp = []
+                //case 3
+            for (let j = (cellA[1] + 1); j < this.colMax; j++) {
+                if (this.mainArray[cellA[0]][j]) break;
+                arrTemp.push([cellA[0], j])
+                if (this.checkVertical((cellA[0]), j, cellB[0]) && this.checkHorizontal(cellB[0], j, cellB[1])) {
+                    console.log("TH3")
+                    arrTemp.pop(); // delete duplicate  element
+                    this.pathArray = arrTemp.concat(this.pathArray) //concat 2 array path: arrTemp is horizontal path 
+                    this.caseAlgorithm = 3
+                    this.addCellFirstAndLastIntoPathList(cellA, cellB, this.pathArray)
+                    return true;
+                }
+            }
+            arrTemp = []
+            if (cellA[1] > cellB[1]) {
+                let C = cellA;
+                cellA = cellB;
+                cellB = C;
+            }
+
+            //case 4
+            if (this.checkHorizontal(cellA[0], cellA[1] + 1, cellB[1]) && this.checkVertical(cellA[0], cellB[1], cellB[0])) {
+                console.log("TH4")
+                this.caseAlgorithm = 4
                 this.addCellFirstAndLastIntoPathList(cellA, cellB, this.pathArray)
                 return true;
             }
-        }
-        arrTemp = []
-            //case 6
-        for (let j = (cellA[0] + 1); j < this.rowMax; j++) {
-            arrTemp.push([j, cellA[1]])
-            if (this.mainArray[j][cellA[1]]) break;
-            if (this.checkHorizontal(j, (cellA[1]), cellB[1]) && this.checkVertical(j, cellB[1], cellB[0])) {
-                console.log("TH6")
-                arrTemp.pop(); // delete duplicate  element
-                this.pathArray = arrTemp.concat(this.pathArray) //concat 2 array path: arrTemp is horizontal path 
-                this.caseAlgorithm = 6
-                this.addCellFirstAndLastIntoPathList(cellA, cellB, this.pathArray)
-                return true;
+            //case 5
+            for (let j = (cellA[0] - 1); j >= 0; j--) {
+                if (this.mainArray[j][cellA[1]]) break;
+                arrTemp.push([j, cellA[1]])
+                if (this.checkHorizontal(j, (cellA[1]), cellB[1]) && this.checkVertical(j, cellB[1], cellB[0])) {
+                    console.log("TH5")
+                    arrTemp.pop(); // delete duplicate  element
+                    this.pathArray = arrTemp.concat(this.pathArray) //concat 2 array path: arrTemp is horizontal path 
+                    this.caseAlgorithm = 5
+                    this.addCellFirstAndLastIntoPathList(cellA, cellB, this.pathArray)
+                    return true;
+                }
             }
+            arrTemp = []
+                //case 6
+            for (let j = (cellA[0] + 1); j < this.rowMax; j++) {
+                arrTemp.push([j, cellA[1]])
+                if (this.mainArray[j][cellA[1]]) break;
+                if (this.checkHorizontal(j, (cellA[1]), cellB[1]) && this.checkVertical(j, cellB[1], cellB[0])) {
+                    console.log("TH6")
+                    arrTemp.pop(); // delete duplicate  element
+                    this.pathArray = arrTemp.concat(this.pathArray) //concat 2 array path: arrTemp is horizontal path 
+                    this.caseAlgorithm = 6
+                    this.addCellFirstAndLastIntoPathList(cellA, cellB, this.pathArray)
+                    return true;
+                }
+            }
+            arrTemp = []
         }
-        arrTemp = []
-    }
+        // add cell into the top of the list and the bottom of the list
     addCellFirstAndLastIntoPathList(a, b, arr) {
         arr.unshift(a); // first index of path 
         arr.push(b);
@@ -298,241 +297,243 @@ class Game {
             + u: up
         @return: directList: list direction line example: ['ul','ur','dl',...] 
         */
+
     findDirect() {
-        let zigzag = 1;
-        let direct = 'null'
-        for (let i = 0; i < this.pathArray.length; i++) {
-            let prev = this.pathArray[i - 1]
-            let next = this.pathArray[i + 1]
-            let current = this.pathArray[i]
-            if (prev && next && i != 0 && i != this.pathArray.length - 1) {
-                switch (this.caseAlgorithm) {
-                    case 1:
-                        direct = 'd'
-                        if (prev[0] < next[0] && prev[1] < next[1]) {
-                            this.directList.push('ur')
-                            direct = 'r'
-                                // console.log("trên-phải")
-                        } else if (prev[0] < next[0] && prev[1] > next[1]) {
-                            direct = 'l'
-                            this.directList.push('ul')
-                                // console.log("trên trái")
-                        } else if (current[0] < next[0] && current[1] == next[1]) {
-                            this.directList.push('ud')
-                                // console.log("xuống")
-                        } else if (current[0] == next[0] && current[1] < next[1]) {
-                            direct = 'r'
-                            this.directList.push('lr')
-                                // console.log("ngang-phai")
-                        } else if (current[0] == next[0] && current[1] > next[1]) {
-                            direct = 'l'
-                            this.directList.push('lr')
-                                // console.log("ngang-trái")
-                        }
-                        break;
-                    case 2:
-                        direct = 'r'
-                            // console.log(prev, next, zigzag)
-                        if (prev[0] < next[0] && prev[1] < next[1]) {
-                            this.directList.push('ur')
-                                // console.log("trên-phải", current)
-                        } else if (prev[0] < next[0] && prev[1] > next[1] && zigzag == 1) {
-                            zigzag = 2;
-                            direct = 'd';
-                            this.directList.push('dr')
-                                // console.log("phải dưới", current)
-                        } else if (prev[0] < next[0] && prev[1] > next[1] && zigzag == 2) {
-                            direct = 'l';
-                            zigzag = 1
-                            this.directList.push('ul')
-                                // console.log("trên-trái", current)
-                        } else if (current[0] < next[0] && current[1] == next[1]) {
-                            this.directList.push('ud')
-                            direct = 'd';
-                            // console.log("xuống", current)
-                        } else if (current[0] == next[0] && current[1] > next[1]) {
-                            direct = 'l';
-                            this.directList.push('lr')
-                                // console.log("ngang-trái", current)
-                        } else if (current[0] == next[0] && current[1] < next[1]) {
-                            direct = 'r';
-                            this.directList.push('lr')
-                                // console.log("ngang-phải", current)
-                        }
-                        break;
-                    case 3:
-                        direct = 'l'
-                        if (prev[0] < next[0] && prev[1] > next[1]) {
-                            this.directList.push('ul')
-                                // console.log("trên-trái", current)
-                        } else if (prev[0] < next[0] && prev[1] < next[1] && zigzag == 1) {
-                            zigzag = 2
+            let zigzag = 1;
+            let direct = 'null'
+            for (let i = 0; i < this.pathArray.length; i++) {
+                let prev = this.pathArray[i - 1]
+                let next = this.pathArray[i + 1]
+                let current = this.pathArray[i]
+                if (prev && next && i != 0 && i != this.pathArray.length - 1) {
+                    switch (this.caseAlgorithm) {
+                        case 1:
                             direct = 'd'
-                            this.directList.push('dl')
-                                // console.log("trái-dưới", current)
-                        } else if (prev[0] < next[0] && prev[1] < next[1] && zigzag == 2) {
+                            if (prev[0] < next[0] && prev[1] < next[1]) {
+                                this.directList.push('ur')
+                                direct = 'r'
+                                    // console.log("trên-phải")
+                            } else if (prev[0] < next[0] && prev[1] > next[1]) {
+                                direct = 'l'
+                                this.directList.push('ul')
+                                    // console.log("trên trái")
+                            } else if (current[0] < next[0] && current[1] == next[1]) {
+                                this.directList.push('ud')
+                                    // console.log("xuống")
+                            } else if (current[0] == next[0] && current[1] < next[1]) {
+                                direct = 'r'
+                                this.directList.push('lr')
+                                    // console.log("ngang-phai")
+                            } else if (current[0] == next[0] && current[1] > next[1]) {
+                                direct = 'l'
+                                this.directList.push('lr')
+                                    // console.log("ngang-trái")
+                            }
+                            break;
+                        case 2:
                             direct = 'r'
-                            zigzag = 1
-                            this.directList.push('ur')
-                                // console.log("trên-phải", current)
-                        } else if (current[0] < next[0] && current[1] == next[1]) {
-                            this.directList.push('ud')
-                            direct = 'd'
+                                // console.log(prev, next, zigzag)
+                            if (prev[0] < next[0] && prev[1] < next[1]) {
+                                this.directList.push('ur')
+                                    // console.log("trên-phải", current)
+                            } else if (prev[0] < next[0] && prev[1] > next[1] && zigzag == 1) {
+                                zigzag = 2;
+                                direct = 'd';
+                                this.directList.push('dr')
+                                    // console.log("phải dưới", current)
+                            } else if (prev[0] < next[0] && prev[1] > next[1] && zigzag == 2) {
+                                direct = 'l';
+                                zigzag = 1
+                                this.directList.push('ul')
+                                    // console.log("trên-trái", current)
+                            } else if (current[0] < next[0] && current[1] == next[1]) {
+                                this.directList.push('ud')
+                                direct = 'd';
                                 // console.log("xuống", current)
-                        } else if (current[0] == next[0] && current[1] < next[1]) {
-                            direct = 'r'
-                            this.directList.push('lr')
-                                // console.log("ngang", current)
-                        } else if (current[0] == next[0] && current[1] > next[1]) {
+                            } else if (current[0] == next[0] && current[1] > next[1]) {
+                                direct = 'l';
+                                this.directList.push('lr')
+                                    // console.log("ngang-trái", current)
+                            } else if (current[0] == next[0] && current[1] < next[1]) {
+                                direct = 'r';
+                                this.directList.push('lr')
+                                    // console.log("ngang-phải", current)
+                            }
+                            break;
+                        case 3:
                             direct = 'l'
-                            this.directList.push('lr')
-                                // console.log("ngang", current)
-                        }
-                        break;
-                    case 4:
-                        if (current[0] == next[0] && current[1] < next[1]) {
-                            this.directList.push('lr')
-                                // console.log("ngang")
-                        }
-                        break;
-                    case 5:
-                        if (prev[0] < next[0] && prev[1] < next[1]) {
-                            direct = 'd'
-                            this.directList.push('dl')
-                                // console.log("dưới-trái")
-                        } else if (prev[0] > next[0] && prev[1] < next[1] && zigzag == 1) {
-                            zigzag = 2;
-                            this.directList.push('dr')
-                                // console.log("dưới-phải", current)
-                        } else if (prev[0] > next[0] && prev[1] < next[1] && zigzag == 2) {
-                            zigzag = 1;
-                            this.directList.push('ul')
-                                // console.log("trên-trái", current)
-                        } else if (current[0] == next[0] && current[1] < next[1]) {
-                            this.directList.push('lr')
-                                // console.log("ngang", current)
-                        } else if (current[0] > next[0] && current[1] == next[1]) {
-                            this.directList.push('ud')
+                            if (prev[0] < next[0] && prev[1] > next[1]) {
+                                this.directList.push('ul')
+                                    // console.log("trên-trái", current)
+                            } else if (prev[0] < next[0] && prev[1] < next[1] && zigzag == 1) {
+                                zigzag = 2
+                                direct = 'd'
+                                this.directList.push('dl')
+                                    // console.log("trái-dưới", current)
+                            } else if (prev[0] < next[0] && prev[1] < next[1] && zigzag == 2) {
+                                direct = 'r'
+                                zigzag = 1
+                                this.directList.push('ur')
+                                    // console.log("trên-phải", current)
+                            } else if (current[0] < next[0] && current[1] == next[1]) {
+                                this.directList.push('ud')
+                                direct = 'd'
+                                    // console.log("xuống", current)
+                            } else if (current[0] == next[0] && current[1] < next[1]) {
+                                direct = 'r'
+                                this.directList.push('lr')
+                                    // console.log("ngang", current)
+                            } else if (current[0] == next[0] && current[1] > next[1]) {
+                                direct = 'l'
+                                this.directList.push('lr')
+                                    // console.log("ngang", current)
+                            }
+                            break;
+                        case 4:
+                            if (current[0] == next[0] && current[1] < next[1]) {
+                                this.directList.push('lr')
+                                    // console.log("ngang")
+                            }
+                            break;
+                        case 5:
+                            if (prev[0] < next[0] && prev[1] < next[1]) {
+                                direct = 'd'
+                                this.directList.push('dl')
+                                    // console.log("dưới-trái")
+                            } else if (prev[0] > next[0] && prev[1] < next[1] && zigzag == 1) {
+                                zigzag = 2;
+                                this.directList.push('dr')
+                                    // console.log("dưới-phải", current)
+                            } else if (prev[0] > next[0] && prev[1] < next[1] && zigzag == 2) {
+                                zigzag = 1;
+                                this.directList.push('ul')
+                                    // console.log("trên-trái", current)
+                            } else if (current[0] == next[0] && current[1] < next[1]) {
+                                this.directList.push('lr')
+                                    // console.log("ngang", current)
+                            } else if (current[0] > next[0] && current[1] == next[1]) {
+                                this.directList.push('ud')
+                                direct = 'u'
+                                    // console.log("dọc", current)
+                            } else if (current[0] < next[0] && current[1] == next[1]) {
+                                this.directList.push('ud')
+                                direct = 'd'
+                                    // console.log("dọc", current)
+                            }
+                            break;
+                        case 6:
                             direct = 'u'
-                                // console.log("dọc", current)
-                        } else if (current[0] < next[0] && current[1] == next[1]) {
-                            this.directList.push('ud')
-                            direct = 'd'
-                                // console.log("dọc", current)
-                        }
-                        break;
-                    case 6:
-                        direct = 'u'
-                        if (prev[0] > next[0] && prev[1] < next[1]) {
-                            this.directList.push('ul')
-                            direct = 'u'
-                                // console.log("trên-trái", current)
-                        } else if (prev[0] < next[0] && prev[1] < next[1] && zigzag == 1) {
-                            zigzag = 2;
-                            direct = 'd'
-                            this.directList.push('ur')
-                                // console.log("trên-phải", current)
-                        } else if (prev[0] < next[0] && prev[1] < next[1] && zigzag == 2) {
-                            zigzag = 1;
-                            direct = 'd'
-                            this.directList.push('dl')
-                                // console.log("trái-dưới", current)
-                        } else if (current[0] == next[0] && current[1] < next[1]) {
-                            this.directList.push('lr')
-                                // console.log("ngang", current)
-                        } else if (current[0] > next[0] && current[1] == next[1]) {
-                            direct = 'u'
-                            this.directList.push('ud')
-                                // console.log("dọc-lên", current)
-                        } else if (current[0] < next[0] && current[1] == next[1]) {
-                            direct = 'd'
-                            this.directList.push('ud')
-                                // console.log("dọc-xuong", current)
-                        }
-                        break;
-                }
-            } else if (i == 0) {
-                switch (this.caseAlgorithm) {
-                    case 1:
-                        this.directList.push('d')
-                        break;
-                    case 2:
-                        this.directList.push('l')
-                        break;
-                    case 3:
-                        this.directList.push('r')
-                        break;
-                    case 4:
-                        this.directList.push('r')
-                        break;
-                    case 5:
-                        this.directList.push('u')
-                        break;
-                    case 6:
-                        this.directList.push('d')
-                        break;
-                }
-            } else if (i == this.pathArray.length - 1) {
-                switch (this.caseAlgorithm) {
-                    case 1:
-                        if (direct == 'r') {
-                            this.directList.push('l')
-                        } else if (direct == 'l') {
-                            this.directList.push('r')
-                        } else {
-                            this.directList.push('u')
-                        }
-                        break;
-                    case 2:
-                        if (direct == 'l') {
-                            this.directList.push('r')
-                        } else if (direct == 'r') {
-                            this.directList.push('l')
-                        } else {
-                            this.directList.push('u')
-                        }
-                        break;
-                    case 3:
-                        if (direct == 'r') {
-                            this.directList.push('l')
-                        } else if (direct == 'l') {
-                            this.directList.push('r')
-                        } else {
-                            this.directList.push('u')
-                        }
-                        break;
-                    case 4:
-                        this.directList.push('l')
-                        break;
-                    case 5:
-                        if (direct == 'u') {
+                            if (prev[0] > next[0] && prev[1] < next[1]) {
+                                this.directList.push('ul')
+                                direct = 'u'
+                                    // console.log("trên-trái", current)
+                            } else if (prev[0] < next[0] && prev[1] < next[1] && zigzag == 1) {
+                                zigzag = 2;
+                                direct = 'd'
+                                this.directList.push('ur')
+                                    // console.log("trên-phải", current)
+                            } else if (prev[0] < next[0] && prev[1] < next[1] && zigzag == 2) {
+                                zigzag = 1;
+                                direct = 'd'
+                                this.directList.push('dl')
+                                    // console.log("trái-dưới", current)
+                            } else if (current[0] == next[0] && current[1] < next[1]) {
+                                this.directList.push('lr')
+                                    // console.log("ngang", current)
+                            } else if (current[0] > next[0] && current[1] == next[1]) {
+                                direct = 'u'
+                                this.directList.push('ud')
+                                    // console.log("dọc-lên", current)
+                            } else if (current[0] < next[0] && current[1] == next[1]) {
+                                direct = 'd'
+                                this.directList.push('ud')
+                                    // console.log("dọc-xuong", current)
+                            }
+                            break;
+                    }
+                } else if (i == 0) {
+                    switch (this.caseAlgorithm) {
+                        case 1:
                             this.directList.push('d')
-                        } else if (direct == 'd') {
+                            break;
+                        case 2:
+                            this.directList.push('l')
+                            break;
+                        case 3:
+                            this.directList.push('r')
+                            break;
+                        case 4:
+                            this.directList.push('r')
+                            break;
+                        case 5:
                             this.directList.push('u')
-                        }
-                        break;
-                    case 6:
-                        if (direct == 'd') {
-                            this.directList.push('u')
-                        } else if (direct == 'u') {
+                            break;
+                        case 6:
                             this.directList.push('d')
-                        }
+                            break;
+                    }
+                } else if (i == this.pathArray.length - 1) {
+                    switch (this.caseAlgorithm) {
+                        case 1:
+                            if (direct == 'r') {
+                                this.directList.push('l')
+                            } else if (direct == 'l') {
+                                this.directList.push('r')
+                            } else {
+                                this.directList.push('u')
+                            }
+                            break;
+                        case 2:
+                            if (direct == 'l') {
+                                this.directList.push('r')
+                            } else if (direct == 'r') {
+                                this.directList.push('l')
+                            } else {
+                                this.directList.push('u')
+                            }
+                            break;
+                        case 3:
+                            if (direct == 'r') {
+                                this.directList.push('l')
+                            } else if (direct == 'l') {
+                                this.directList.push('r')
+                            } else {
+                                this.directList.push('u')
+                            }
+                            break;
+                        case 4:
+                            this.directList.push('l')
+                            break;
+                        case 5:
+                            if (direct == 'u') {
+                                this.directList.push('d')
+                            } else if (direct == 'd') {
+                                this.directList.push('u')
+                            }
+                            break;
+                        case 6:
+                            if (direct == 'd') {
+                                this.directList.push('u')
+                            } else if (direct == 'u') {
+                                this.directList.push('d')
+                            }
 
 
-                        break;
+                            break;
+                    }
                 }
+
             }
+            this.drawPath(this.directList, this.cells)
+            this.directList = []
+            setTimeout(() => {
+                for (let i = 0; i < this.cells.length; i++) {
+                    this.removeClassStartsWith(this.cells[i], 'line-');
+                }
+            }, 500)
 
         }
-        this.drawPath(this.directList, this.cells)
-        this.directList = []
-        setTimeout(() => {
-            for (let i = 0; i < this.cells.length; i++) {
-                this.removeClassStartsWith(this.cells[i], 'line-');
-            }
-        }, 500)
-
-    }
+        //remove class start with the given string
     removeClassStartsWith(node, prefix) {
         var regx = new RegExp('\\b' + prefix + '[^ ]*[ ]?\\b', 'g')
         node.className = node.className.replace(regx, '');
@@ -580,8 +581,9 @@ class Game {
         }
         //get index of cell base x y from main array
     getIndexOfCell(x, y) {
-        return x * this.colMax + y;
-    }
+            return x * this.colMax + y;
+        }
+        // help auto select 2 cells
     hint() {
             if (this.numberHint > 0) {
                 A: for (var i = 0; i < this.rowMax; i++) {
@@ -614,37 +616,40 @@ class Game {
         }
         //random mainArray
     randomCells() {
-        let arr = [];
-        for (let i = 0; i < this.rowMax; i++) {
-            for (let j = 0; j < this.colMax; j++) {
-                if (this.mainArray[i][j] != 0) arr.push(this.mainArray[i][j])
+            let arr = [];
+            for (let i = 0; i < this.rowMax; i++) {
+                for (let j = 0; j < this.colMax; j++) {
+                    if (this.mainArray[i][j] != 0) arr.push(this.mainArray[i][j])
+                }
             }
-        }
-        arr = arr.sort(() => Math.random() - 0.5)
-        for (let i = 0; i < this.rowMax; i++) {
-            for (let j = 0; j < this.colMax; j++) {
-                if (this.mainArray[i][j] != 0) this.mainArray[i][j] = arr.shift();
+            arr = arr.sort(() => Math.random() - 0.5)
+            for (let i = 0; i < this.rowMax; i++) {
+                for (let j = 0; j < this.colMax; j++) {
+                    if (this.mainArray[i][j] != 0) this.mainArray[i][j] = arr.shift();
+                }
             }
+            this.clearBoard()
+            this.createBoardPikachu(this.mainArray)
+            this.cells = document.querySelectorAll(".pikachu")
         }
-        this.clearBoard()
-        this.createBoardPikachu(this.mainArray)
-        this.cells = document.querySelectorAll(".pikachu")
-    }
+        //handle click option: volume, hint, radom, restart
     handleOption() {
         const hintBtn = document.getElementById('hint')
         hintBtn.onclick = () => { this.hint() }
         const exchangeBtn = document.getElementById('exchange')
         exchangeBtn.onclick = () => { this.randomCells() }
-        this.buttonOffOnMusic.onclick = () => {
+        this.musicBtn.onclick = () => {
             this.isPlayBackgroundSound = !this.isPlayBackgroundSound
             if (this.isPlayBackgroundSound) {
                 this.musicBackground.play()
-                this.buttonOffOnMusicLottie.playSegments([0, 40], true);
+                this.iconMusic.playSegments([0, 40], true);
             } else {
-                this.buttonOffOnMusicLottie.playSegments([40, 100], true);
-                this.musicBackground.stop();
+                this.iconMusic.playSegments([40, 100], true);
+                this.musicBackground.pause();
             }
         }
     }
 }
+
+//run game
 const g = new Game();

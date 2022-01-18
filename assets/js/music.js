@@ -10,7 +10,7 @@ export default class Music {
     play() {
         this.sound.play()
     }
-    stop() {
+    pause() {
         this.sound.pause()
     }
 }
