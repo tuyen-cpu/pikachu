@@ -43,6 +43,8 @@ class Game {
             this.createBoardPikachu(this.mainArray);
             this.cells = document.querySelectorAll(".pikachu")
             this.countTime()
+            this.hintValue.innerHTML = this.numberHint
+            this.randomValue.innerHTML = this.numberRandom
             this.score = 0
             this.scoreValue.innerHTML = this.score
         }
@@ -713,6 +715,8 @@ class Game {
             this.levelValue.innerHTML = this.level
     }
     nextLevel() {
+        this.numberHint = 10
+        this.numberRandom = 10
         if (this.typeOfPikachu == 30) {
             this.typeOfPikachu = 33
         } else {
@@ -724,6 +728,8 @@ class Game {
         if (this.level == 10) {
             this.time = 500
         }
+        this.hintValue.innerHTML = this.numberHint
+        this.randomValue.innerHTML = this.numberRandom
         this.clearBoard()
         this.mainArray = this.borderEmptyArray(this.shuffledArr(this.randomTwinArray()));
         this.createBoardPikachu(this.mainArray);
