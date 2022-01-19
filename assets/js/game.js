@@ -9,14 +9,14 @@ class Game {
         this.selectedArray = [
             [null, null],
             [null, null]
-        ];
+        ]; //click 1 cell => add [x,y]
 
-        this.numberHint = 3 //allowed number of times click hint button
-        this.numberRandom = 3 //allowed number of times click random button
+        this.numberHint = 10 //allowed number of times click hint button
+        this.numberRandom = 10 //allowed number of times click random button
         this.caseAlgorithm = null //6 case
         this.directList = [] // direction list connect 2 cells
         this.pathArray = []; // Array contain path when connect 2 cell
-        this.typeOfPikachu = 33 // type number of pika chu init is 7
+        this.typeOfPikachu = 10 // type number of pika chu init is 7
         this.rowMax = ROW + 2 //the actual number of rows of the matrix including the border (border value is 0)
         this.colMax = COL + 2 //the actual number of columns of the matrix including the border (border value is 0)
         this.board = document.getElementById('board')
@@ -35,7 +35,6 @@ class Game {
     }
     init() {
             this.totalPikachu = COL * ROW
-            console.log(this.totalPikachu)
             this.time = 300
             this.level = 1
             this.levelValue.innerHTML = this.level
@@ -714,8 +713,23 @@ class Game {
             this.levelValue.innerHTML = this.level
     }
     nextLevel() {
+        if (this.typeOfPikachu == 30) {
+            this.typeOfPikachu = 33
+        } else {
+            this.typeOfPikachu = this.typeOfPikachu + 5
 
+        }
         this.updateLevel()
+        this.time = 600
+        if (this.level == 10) {
+            this.time = 500
+        }
+        this.clearBoard()
+        this.mainArray = this.borderEmptyArray(this.shuffledArr(this.randomTwinArray()));
+        this.createBoardPikachu(this.mainArray);
+        this.cells = document.querySelectorAll(".pikachu")
+        this.countTime()
+
     }
 
     reset() {
